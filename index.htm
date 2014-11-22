@@ -83,6 +83,10 @@
 					$(elem).addClass('list-group-item-info');
 				};
 
+				var unhighlightMenuEntry = function(elem) {
+					$(elem).removeClass('list-group-item-info');
+				};
+
 				var unhighlightAllMenuEntriesInsideDiv = function(selector) {
 					$(selector + ' .list-group-item-info').removeClass('list-group-item-info');
 				};
@@ -110,6 +114,10 @@
 
 				var clearModuleOptionsValues = function() {
 					$('.js-module-options-list .js-module-option-text-value').val('');
+				};
+
+				var clearModuleOptionValue = function(elem) {
+					$('.js-module-option-text-value', elem).val('');
 				};
 
 				var showYamlDocument = function() {
@@ -142,11 +150,18 @@
 					regenerateYamlDocument();
 				};
 
+				var onModuleOptionUnselection = function(event) {
+					unhighlightMenuEntry(event.target);
+					clearModuleOptionValue(event.target);
+					regenerateYamlDocument();
+				};
+
 				// bind callbacks
 
 				$(document).bind('app:category-selected', onCategorySelection);
 				$(document).bind('app:module-selected', onModuleSelection);
 				$(document).bind('app:module-option-selected', onModuleOptionSelection);
+				$(document).bind('app:module-option-unselected', onModuleOptionUnselection);
 
 				// other
 
@@ -178,8 +193,12 @@
 						$(this).trigger('app:module-selected');
 					});
 
-				$('.js-module-option-text-value').change(function() {
-					$(this).parent('.list-group-item').trigger('app:module-option-selected');
+				$('.js-module-option-text-value').change(function(event) {
+					if ($(event.target).val() === '') {
+						$(this).parent('.list-group-item').trigger('app:module-option-unselected');
+					} else {
+						$(this).parent('.list-group-item').trigger('app:module-option-selected');
+					}
 				});
 			});
 		</script>
