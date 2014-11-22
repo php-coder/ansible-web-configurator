@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Ansible configurator</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+		<style type="text/css">
+			.js-categories-list li.list-group-item:hover,
+			.js-modules-list li.list-group-item:hover {
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2 js-categories-list">
+					<ul class="list-group list-unstyled">
+						<li class="list-group-item">Cloud</li>
+						<li class="list-group-item">Commands</li>
+						<li class="list-group-item">Database</li>
+						<li class="list-group-item">Files</li>
+						<li class="list-group-item">Inventory</li>
+						<li class="list-group-item">Messaging</li>
+						<li class="list-group-item">Monitoring</li>
+						<li class="list-group-item">Network</li>
+						<li class="list-group-item">Notification</li>
+						<li class="list-group-item">Packaging</li>
+						<li class="list-group-item">Source Control</li>
+						<li class="list-group-item">System</li>
+						<li class="list-group-item">Utilities</li>
+						<li class="list-group-item">Web Infrastructure</li>
+						<li class="list-group-item">Windows</li>
+					</ul>
+				</div>
+				<div class="col-md-3 hidden js-modules-list">
+					<ul class="list-group list-unstyled">
+						<li class="list-group-item"><span class="js-module-name">command</span></li>
+						<li class="list-group-item"><span class="js-module-name">raw</span></li>
+						<li class="list-group-item"><span class="js-module-name">script</span></li>
+						<li class="list-group-item"><span class="js-module-name">shell</span></li>
+					</ul>
+				</div>
+				<div class="col-md-3 hidden js-module-options-list">
+					<ul class="list-group list-unstyled">
+						<li class="list-group-item">
+							<span class="js-module-option-name">chdir</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
+						</li>
+						<li class="list-group-item">
+							<span class="js-module-option-name">creates</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
+						</li>
+						<li class="list-group-item">
+							<span class="js-module-option-name">executable</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
+						</li>
+						<li class="list-group-item">
+							<span class="js-module-option-name">removes</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
+						</li>
+						<li class="list-group-item">
+							<span class="js-module-option-name">warn</span> <input type="checkbox" checked />
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-4 hidden js-result-command">
+					<textarea class="js-result-textarea" rows="20" cols="50">
+					</textarea>
+				</div>
+			</div>
+		</div>
+
+		<script src="http://yastatic.net/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var generateYamlCommand = function() {
+					var moduleName = $('.js-modules-list .list-group-item-info .js-module-name').text();
+					var moduleOptions = [];
+					$('.js-module-options-list .list-group-item-info').each(function(el) {
+						var option = $('.js-module-option-name', this).text() + ': ' + $('.js-module-option-text-value', this).val();
+						moduleOptions.push(option);
+					});
+					return moduleName + ":\n  " + moduleOptions.join("\n  ");
+				};
+
+				$('.js-categories-list li.list-group-item')
+					.hover(function() {
+						$(this).toggleClass('active');
+					})
+					.click(function(e) {
+						$('.js-module-options-list').addClass('hidden');
+						$('.js-result-command').addClass('hidden');
+						$('.js-modules-list .list-group-item-info').removeClass('list-group-item-info');
+						$('.js-modules-list').removeClass("hidden");
+						$(this).siblings('.list-group-item-info').removeClass('list-group-item-info');
+						$(this).addClass('list-group-item-info');
+					});
+				
+				$('.js-modules-list li.list-group-item')
+					.hover(function() {
+						$(this).toggleClass('active');
+					})
+					.click(function() {
+						$('.js-module-options-list .list-group-item-info').removeClass('list-group-item-info');
+						$('.js-module-options-list .js-module-option-text-value').val('');
+						$('.js-module-options-list').removeClass('hidden');
+						$('.js-result-command').removeClass('hidden');
+						$(this).siblings('.list-group-item-info').removeClass('list-group-item-info');
+						$(this).addClass('list-group-item-info');
+						$('.js-result-textarea').html(generateYamlCommand());
+
+					});
+
+				$('.js-module-option-text-value').change(function() {
+					$(this).parent('.list-group-item').addClass('list-group-item-info');
+					$('.js-result-textarea').html(generateYamlCommand());
+				});
+			});
+		</script>
+	</body>
+</html>
+
