@@ -73,6 +73,83 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function() {
+
+				// helpers
+
+				var highlightMenuEntry = function(elem, clearOtherEntries) {
+					if (clearOtherEntries) {
+						$(elem).siblings('.list-group-item-info').removeClass('list-group-item-info');
+					}
+					$(elem).addClass('list-group-item-info');
+				};
+
+				var unhighlightAllMenuEntriesInsideDiv = function(selector) {
+					$(selector + ' .list-group-item-info').removeClass('list-group-item-info');
+				};
+
+				var regenerateYamlDocument = function() {
+					$('.js-result-textarea').html(generateYamlCommand());
+				};
+
+				var showModulesList = function() {
+					unhighlightAllMenuEntriesInsideDiv('.js-modules-list');
+
+					$('.js-modules-list').removeClass("hidden");
+				};
+
+				var showModuleOptionsList = function() {
+					clearModuleOptionsValues();
+					unhighlightAllMenuEntriesInsideDiv('.js-module-options-list');
+
+					$('.js-module-options-list').removeClass('hidden');
+				};
+
+				var hideModuleOptionsList = function() {
+					$('.js-module-options-list').addClass('hidden');
+				};
+
+				var clearModuleOptionsValues = function() {
+					$('.js-module-options-list .js-module-option-text-value').val('');
+				};
+
+				var showYamlDocument = function() {
+					regenerateYamlDocument();
+
+					$('.js-result-command').removeClass('hidden');
+				};
+
+				var hideYamlDocument = function() {
+					$('.js-result-command').addClass('hidden');
+				};
+
+				// define callbacks
+
+				var onCategorySelection = function(event) {
+					highlightMenuEntry(event.target, true);
+					hideModuleOptionsList();
+					hideYamlDocument();
+					showModulesList();
+				};
+
+				var onModuleSelection = function(event) {
+					highlightMenuEntry(event.target, true);
+					showModuleOptionsList();
+					showYamlDocument();
+				};
+
+				var onModuleOptionSelection = function(event) {
+					highlightMenuEntry(event.target);
+					regenerateYamlDocument();
+				};
+
+				// bind callbacks
+
+				$(document).bind('app:category-selected', onCategorySelection);
+				$(document).bind('app:module-selected', onModuleSelection);
+				$(document).bind('app:module-option-selected', onModuleOptionSelection);
+
+				// other
+
 				var generateYamlCommand = function() {
 					var moduleName = $('.js-modules-list .list-group-item-info .js-module-name').text();
 					var moduleOptions = [];
@@ -83,17 +160,14 @@
 					return moduleName + ":\n  " + moduleOptions.join("\n  ");
 				};
 
+				// initialize
+
 				$('.js-categories-list li.list-group-item')
 					.hover(function() {
 						$(this).toggleClass('active');
 					})
 					.click(function(e) {
-						$('.js-module-options-list').addClass('hidden');
-						$('.js-result-command').addClass('hidden');
-						$('.js-modules-list .list-group-item-info').removeClass('list-group-item-info');
-						$('.js-modules-list').removeClass("hidden");
-						$(this).siblings('.list-group-item-info').removeClass('list-group-item-info');
-						$(this).addClass('list-group-item-info');
+						$(this).trigger('app:category-selected');
 					});
 				
 				$('.js-modules-list li.list-group-item')
@@ -101,19 +175,11 @@
 						$(this).toggleClass('active');
 					})
 					.click(function() {
-						$('.js-module-options-list .list-group-item-info').removeClass('list-group-item-info');
-						$('.js-module-options-list .js-module-option-text-value').val('');
-						$('.js-module-options-list').removeClass('hidden');
-						$('.js-result-command').removeClass('hidden');
-						$(this).siblings('.list-group-item-info').removeClass('list-group-item-info');
-						$(this).addClass('list-group-item-info');
-						$('.js-result-textarea').html(generateYamlCommand());
-
+						$(this).trigger('app:module-selected');
 					});
 
 				$('.js-module-option-text-value').change(function() {
-					$(this).parent('.list-group-item').addClass('list-group-item-info');
-					$('.js-result-textarea').html(generateYamlCommand());
+					$(this).parent('.list-group-item').trigger('app:module-option-selected');
 				});
 			});
 		</script>
