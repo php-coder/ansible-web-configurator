@@ -198,14 +198,31 @@
 							{
 								name: 'add_host',
 								description: 'Add a host (and alternatively a group) to the ansible-playbook in-memory inventory',
-								options: [
-								]
+								type: 'core',
+								options: {
+									groups: {
+										type: 'string',
+										required: false,
+										description: 'the groups to add the hostname to, comma separated'
+									},
+									name: {
+										type: 'string',
+										required: true,
+										description: 'the hostname/ip of the host to add to the inventory, can include a colon and a port number'
+									}
+								}
 							},
 							{
 								name: 'group_by',
 								description: 'Create Ansible groups based on facts',
-								options: [
-								]
+								type: 'core',
+								options: {
+									key: {
+										type: 'string',
+										required: true,
+										description: 'the variables whose values will be used as groups'
+									}
+								}
 							}
 						]
 					},
@@ -265,20 +282,105 @@
 							{
 								name: 'apt',
 								description: 'Manages apt-packages',
-								options: [
-								]
+								type: 'core',
+								options: {
+
+								}
 							},
 							{
 								name: 'apt_key',
 								description: 'Add or remove an apt key',
-								options: [
-								]
+								type: 'core',
+								since_version: '1.0',
+								options: {
+									data: {
+										type: 'string',
+										required: false,
+										description: 'keyfile contents'
+									},
+									file: {
+										type: '',
+										required: false,
+										description: 'keyfile path'
+									},
+									id: {
+										type: '',
+										required: false,
+										description: 'identifier of key'
+									},
+									keyring: {
+										type: 'string',
+										required: false,
+										since_version: '1.3',
+										description: 'path to specific keyring file in /etc/apt/trusted.gpg.d'
+									},
+									keyserver: {
+										type: 'string',
+										required: false,
+										since_version: '1.6',
+										description: 'keyserver to retrieve key from'
+									},
+									state: {
+										type: 'choice',
+										choices: ['absent', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'used to specify if key is being added or revoked'
+									},
+									url: {
+										type: 'string',
+										required: false,
+										description: 'url to retrieve key from'
+									},
+									validate_certs: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'yes',
+										description: 'if no, SSL certificates for the target url will not be validated. This should only be used on personally controlled sites using self-signed certificates'
+									}
+								}
 							},
 							{
 								name: 'apt_repository',
 								description: 'Add and remove APT repositories',
-								options: [
-								]
+								type: 'core',
+								options: {
+									mode: {
+										type: 'string',
+										required: false,
+										since_version: '1.6',
+										default_value: '420',
+										description: 'the octal mode for newly created files in sources.list.d'
+									},
+									repo: {
+										type: 'string',
+										required: true,
+										description: 'a source string for the repository'
+									},
+									state: {
+										type: 'choice',
+										choices: ['absent', 'present'],
+										required: false,
+										default_value: 'present',
+										description: 'a source string state'
+									},
+									update_cache: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'yes',
+										description: 'run the equivalent of apt-get update when a change occurs. Cache updates are run after making changes'
+									},
+									validate_certs: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										since_version: '1.8',
+										default_value: 'yes',
+										description: 'If no, SSL certificates for the target repo will not be validated. This should only be used on personally controlled sites using self-signed certificates'
+									}
+								}
 							},
 							{
 								name: 'apt_rpm',
