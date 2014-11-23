@@ -710,11 +710,13 @@
 						var maybeDisabled = !_.isUndefined(elemName.modules) || !_.isUndefined(elemName.options);
 						var withoutModules = !_.isUndefined(elemName.modules) && elemName.modules.length == 0; // only for categories
 						var withoutOptions = !_.isUndefined(elemName.options) && elemName.options.length == 0; // only for modules
-						var disabledClass = maybeDisabled && (withoutModules || withoutOptions) ? ' disabled' : '';
+						var isDisabled = maybeDisabled && (withoutModules || withoutOptions);
+						var disabledClass = isDisabled ? ' disabled' : '';
 						return '<li class="list-group-item' + disabledClass + '">'
 								+ '<span class="' + elemClassName + '">'
 									+ (elemName.title || elemName.name || elemName) // TODO: remove title when all categories will be covered
 								+ '</span>'
+								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
 							+ '</li>';
 					});
 				};
