@@ -795,13 +795,22 @@
 
 				// other
 
-				var generateYamlCommand = function() {
-					var moduleName = $('.js-modules-list .list-group-item-info .js-module-name').text();
+				var getNameOfActiveModule = function() {
+					return $('.js-modules-list .list-group-item-info .js-module-name').first().text();
+				};
+
+				var getFormattedListModuleOptionsWithValues = function(separator) {
 					var moduleOptions = [];
 					$('.js-module-options-list .list-group-item-info').each(function(el) {
-						var option = $('.js-module-option-name', this).text() + ': ' + $('.js-module-option-text-value', this).val();
+						var option = $('.js-module-option-name', this).text() + separator + ' ' + $('.js-module-option-text-value', this).val();
 						moduleOptions.push(option);
 					});
+					return moduleOptions;
+				};
+
+				var generateYamlCommand = function() {
+					var moduleName = getNameOfActiveModule();
+					var moduleOptions = getFormattedListModuleOptionsWithValues(':'); // TODO: handle also key=value
 					return moduleName + ":\n  " + moduleOptions.join("\n  ");
 				};
 
