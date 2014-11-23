@@ -819,6 +819,7 @@
 									+ (elemName.title || elemName.name || elemName) // TODO: remove title when all categories will be covered
 								+ '</span>'
 								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
+								+ (elemName.since_version ? '<span class="label label-warning pull-right">' + elemName.since_version + '</span>' : '')
 							+ '</li>';
 					});
 				};
