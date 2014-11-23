@@ -107,11 +107,53 @@
 					{
 						title: 'Inventory Modules',
 						modules: [
+							{
+								name: 'add_host',
+								description: 'Add a host (and alternatively a group) to the ansible-playbook in-memory inventory',
+								options: [
+								]
+							},
+							{
+								name: 'group_by',
+								description: 'Create Ansible groups based on facts',
+								options: [
+								]
+							}
 						]
 					},
 					{
 						title: 'Messaging Modules',
 						modules: [
+							{
+								name: 'rabbitmq_parameter',
+								description: 'Adds or removes parameters to RabbitMQ',
+								options: [
+								]
+							},
+							{
+								name: 'rabbitmq_plugin',
+								description: 'Adds or removes plugins to RabbitMQ',
+								options: [
+								]
+							},
+							{
+								name: 'rabbitmq_policy',
+								description: 'Manage the state of policies in RabbitMQ',
+								options: [
+								]
+							},
+							{
+								name: 'rabbitmq_user',
+								description: 'Adds or removes users to RabbitMQ',
+								options: [
+								]
+							},
+							{
+								name: 'rabbitmq_vhost',
+								description: 'Manage the state of a virtual host in RabbitMQ',
+								options: [
+								]
+							}
 						]
 					},
 					{
@@ -335,6 +377,36 @@
 					{
 						title: 'Source Control Modules',
 						modules: [
+							{
+								name: 'bzr',
+								description: 'Deploy software (or files) from bzr branches',
+								options: [
+								]
+							},
+							{
+								name: 'git',
+								description: 'Deploy software (or files) from git checkouts',
+								options: [
+								]
+							},
+							{
+								name: 'github_hooks',
+								description: 'Manages github service hooks',
+								options: [
+								]
+							},
+							{
+								name: 'hg',
+								description: 'Manages Mercurial (hg) repositories',
+								options: [
+								]
+							},
+							{
+								name: 'subversion',
+								description: 'Deploys a subversion repository',
+								options: [
+								]
+							}
 						]
 					},
 					{
@@ -350,11 +422,101 @@
 					{
 						title: 'Web Infrastructure Modules',
 						modules: [
+							{
+								name: 'apache2_module',
+								description: 'Enables/disables a module of the Apache2 webserver',
+								options: [
+								]
+							},
+							{
+								name: 'django_manage',
+								description: 'Manages a Django application',
+								options: [
+								]
+							},
+							{
+								name: 'ejabberd_user',
+								description: 'Manages users for ejabberd servers',
+								options: [
+								]
+							},
+							{
+								name: 'htpasswd',
+								description: 'Manages user files for basic authentication',
+								options: [
+								]
+							},
+							{
+								name: 'jboss',
+								description: 'Deploys applications to JBoss',
+								options: [
+								]
+							},
+							{
+								name: 'jira',
+								description: 'Create and modify issues in a JIRA instance',
+								options: [
+								]
+							},
+							{
+								name: 'supervisorctl',
+								description: 'Manage the state of a program or group of programs running via supervisord',
+								options: [
+								]
+							}
 						]
 					},
 					{
 						title: 'Windows Modules',
 						modules: [
+							{
+								name: 'win_feature',
+								description: 'Installs and uninstalls Windows Features',
+								options: [
+								]
+							},
+							{
+								name: 'win_get_url',
+								description: 'Fetches a file from a given URL',
+								options: [
+								]
+							},
+							{
+								name: 'win_group',
+								description: 'Add and remove local groups',
+								options: [
+								]
+							},
+							{
+								name: 'win_msi',
+								description: 'Installs and uninstalls Windows MSI files',
+								options: [
+								]
+							},
+							{
+								name: 'win_ping',
+								description: 'A windows version of the classic ping module',
+								options: [
+								]
+							},
+							{
+								name: 'win_service',
+								description: 'Manages Windows services',
+								options: [
+								]
+							},
+							{
+								name: 'win_stat',
+								description: 'Returns information about a Windows file',
+								options: [
+								]
+							},
+							{
+								name: 'win_user',
+								description: 'Manages local Windows user accounts',
+								options: [
+								]
+							}
 						]
 					}
 				];
