@@ -29,21 +29,7 @@
 				</div>
 				<div class="col-md-3 hidden js-module-options-list">
 					<ul class="list-group list-unstyled">
-						<li class="list-group-item">
-							<span class="js-module-option-name">chdir</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
-						</li>
-						<li class="list-group-item">
-							<span class="js-module-option-name">creates</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
-						</li>
-						<li class="list-group-item">
-							<span class="js-module-option-name">executable</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
-						</li>
-						<li class="list-group-item">
-							<span class="js-module-option-name">removes</span> <input type="text" class="js-module-option-text-value" autocomplete="off" />
-						</li>
-						<li class="list-group-item">
-							<span class="js-module-option-name">warn</span> <input type="checkbox" checked />
-						</li>
+						<!-- Populated from JavaScript -->
 					</ul>
 				</div>
 				<div class="col-md-4 hidden js-result-command">
@@ -71,26 +57,128 @@
 							{
 								name: 'command',
 								description: 'Executes a command on a remote node',
-								options: [
-								]
+								type: 'core',
+								options: {
+									chdir: {
+										type: 'string',
+										required: false,
+										since_version: '0.6',
+										description: 'cd into this directory before running the command'
+									},
+									creates: {
+										type: 'string',
+										required: false,
+										description: 'a filename, when it already exists, this step will not be run'
+									},
+									executable: {
+										type: 'string',
+										required: false,
+										since_version: '0.9',
+										description: 'change the shell used to execute the command. Should be an absolute path to the executable'
+									},
+									free_form: {
+										type: 'string',
+										required: true,
+										description: 'takes a free form command to run'
+									},
+									removes: {
+										type: 'string',
+										required: false,
+										since_version: '0.8',
+										description: 'a filename, when it does not exist, this step will not be run'
+									},
+									warn: {
+										type: 'boolean',
+										required: false,
+										since_version: '1.8',
+										default_value: 'True',
+										description: 'if command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false'
+									}
+								}
 							},
 							{
 								name: 'raw',
 								description: 'Executes a low-down and dirty SSH command',
-								options: [
-								]
+								type: 'core',
+								options: {
+									executable: {
+										type: 'string',
+										required: false,
+										since_version: '1.0',
+										description: 'change the shell used to execute the command. Should be an absolute path to the executable'
+									},
+									free_form: {
+										type: 'string',
+										required: true,
+										description: 'takes a free form command to run'
+									}
+								}
 							},
 							{
 								name: 'script',
 								description: 'Runs a local script on a remote node after transferring it',
-								options: [
-								]
+								type: 'core',
+								options: {
+									creates: {
+										type: 'string',
+										required: false,
+										since_version: '1.5',
+										description: 'a filename, when it already exists, this step will not be run'
+									},
+									free_form: {
+										type: 'string',
+										required: true,
+										description: 'path to the local script file followed by optional arguments'
+									},
+									removes: {
+										type: 'string',
+										required: false,
+										since_version: '1.5',
+										description: 'a filename, when it does not exist, this step will not be run'
+									}
+								}
 							},
 							{
 								name: 'shell',
 								description: 'Execute commands in nodes',
-								options: [
-								]
+								type: 'core',
+								options: {
+									chdir: {
+										type: 'string',
+										required: false,
+										since_version: '0.6',
+										description: 'cd into this directory before running the command'
+									},
+									creates: {
+										type: 'string',
+										required: false,
+										description: 'a filename, when it already exists, this step will not be run'
+									},
+									executable: {
+										type: 'string',
+										required: false,
+										since_version: '0.9',
+										description: 'change the shell used to execute the command. Should be an absolute path to the executable'
+									},
+									free_form: {
+										type: 'string',
+										required: true,
+										description: 'takes a free form command to run'
+									},
+									removes: {
+										type: 'string',
+										required: false,
+										since_version: '0.8',
+										description: 'a filename, when it does not exist, this step will not be run'
+									},
+									warn: {
+										type: 'boolean',
+										required: false,
+										since_version: '1.8',
+										default_value: 'True',
+										description: 'if command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false'
+									}
+								}
 							}
 						]
 					},
@@ -538,44 +626,60 @@
 					$(elem).removeClass('list-group-item-info');
 				};
 
-				var unhighlightAllMenuEntriesInsideDiv = function(selector) {
-					$(selector + ' .list-group-item-info').removeClass('list-group-item-info');
-				};
-
 				var regenerateYamlDocument = function() {
 					$('.js-result-textarea').html(generateYamlCommand());
 				};
 
-				var getModulesListOfCategory = function(categoryName) {
-					var category = _.find(modulesData, function(elem) {
+				var findCategoryByName = function(categoryName) {
+					return _.find(modulesData, function(elem) {
 						return elem.title == categoryName;
 					});
+				};
 
+				var getModulesListOfCategory = function(categoryName) {
+					var category = findCategoryByName(categoryName);
 					return _.pluck(category.modules, 'name');
 				};
 
 				var showModulesList = function(elem) {
-					unhighlightAllMenuEntriesInsideDiv('.js-modules-list');
-
 					var modules = getModulesListOfCategory(getEntryName(elem));
 					$('.js-modules-list ul').html(createEntries(modules, 'js-module-name'));
 					registerEventsForModulesList();
 					$('.js-modules-list').removeClass("hidden");
 				};
 
-				var showModuleOptionsList = function() {
-					clearModuleOptionsValues();
-					unhighlightAllMenuEntriesInsideDiv('.js-module-options-list');
+				var getNameOfActiveCategory = function() {
+					return $('.js-categories-list .list-group-item-info span').first().text();
+				};
+
+				var findModuleByName = function(modulesList, moduleName) {
+					return _.find(modulesList, function(elem) {
+						return elem.name == moduleName;
+					});
+				};
+
+				var getOptionsListOfModule = function(moduleName) {
+					var categoryName = getNameOfActiveCategory();
+					var category = findCategoryByName(categoryName);
+					var module = findModuleByName(category.modules, moduleName);
+					return module.options;
+				};
+
+				var showModuleOptionsList = function(elem) {
+					var modules = getOptionsListOfModule(getEntryName(elem));
+					var modulesNames = [];
+					for (var moduleName in modules) {
+						modulesNames.push(moduleName);
+					}
+
+					$('.js-module-options-list ul').html(createEntriesForModuleOptions(modulesNames, 'js-module-option-name'));
+					registerEventsForModuleOptionsList();
 
 					$('.js-module-options-list').removeClass('hidden');
 				};
 
 				var hideModuleOptionsList = function() {
 					$('.js-module-options-list').addClass('hidden');
-				};
-
-				var clearModuleOptionsValues = function() {
-					$('.js-module-options-list .js-module-option-text-value').val('');
 				};
 
 				var clearModuleOptionValue = function(elem) {
@@ -610,6 +714,16 @@
 					});
 				};
 
+				var createEntriesForModuleOptions = function(names, elemClassName) {
+					return _.map(names, function(elemName) {
+							// TODO: handle more types
+							return '<li class="list-group-item">' +
+										'<span class="' + elemClassName + '">' + elemName + '</span>&nbsp;' +
+										'<input type="text" class="js-module-option-text-value" autocomplete="off" />' +
+									'</li>';
+					});
+				};
+
 				var showCategoriesList = function() {
 					$('.js-categories-list ul').html(createEntries(getCategoriesList(), 'js-category-name'));
 					registerEventsForCategoriesList();
@@ -617,7 +731,7 @@
 
 				var registerEventsForCategoriesList = function() {
 					/// TODO: remove 'disabled' when all categories will be covered
-					$('.js-categories-list li.list-group-item:not(.disabled)')
+					$('.js-categories-list .list-group-item:not(.disabled)')
 						.hover(function() {
 							$(this).toggleClass('active');
 						})
@@ -627,7 +741,7 @@
 				};
 
 				var registerEventsForModulesList = function() {
-					$('.js-modules-list li.list-group-item')
+					$('.js-modules-list .list-group-item')
 						.hover(function() {
 							$(this).toggleClass('active');
 						})
@@ -637,7 +751,7 @@
 				};
 
 				var registerEventsForModuleOptionsList = function() {
-					$('.js-module-option-text-value').change(function(event) {
+					$('.js-module-options-list .js-module-option-text-value').change(function(event) {
 						if ($(event.target).val() === '') {
 							$(this).parent('.list-group-item').trigger('app:module-option-unselected');
 						} else {
@@ -657,7 +771,7 @@
 
 				var onModuleSelection = function(event) {
 					highlightMenuEntry(event.target, true);
-					showModuleOptionsList();
+					showModuleOptionsList(event.target);
 					showYamlDocument();
 				};
 
