@@ -6,9 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Ansible configurator</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+		<!-- Remove .disabled when all categories/modules will be covered -->
 		<style type="text/css">
-			.js-categories-list li.list-group-item:hover,
-			.js-modules-list li.list-group-item:hover {
+			.js-categories-list li.list-group-item:not(.disabled):hover,
+			.js-modules-list li.list-group-item:not(.disabled):hover {
 				cursor: pointer;
 			}
 		</style>
@@ -18,29 +19,12 @@
 			<div class="row">
 				<div class="col-md-2 js-categories-list">
 					<ul class="list-group list-unstyled">
-						<li class="list-group-item">Cloud</li>
-						<li class="list-group-item">Commands</li>
-						<li class="list-group-item">Database</li>
-						<li class="list-group-item">Files</li>
-						<li class="list-group-item">Inventory</li>
-						<li class="list-group-item">Messaging</li>
-						<li class="list-group-item">Monitoring</li>
-						<li class="list-group-item">Network</li>
-						<li class="list-group-item">Notification</li>
-						<li class="list-group-item">Packaging</li>
-						<li class="list-group-item">Source Control</li>
-						<li class="list-group-item">System</li>
-						<li class="list-group-item">Utilities</li>
-						<li class="list-group-item">Web Infrastructure</li>
-						<li class="list-group-item">Windows</li>
+						<!-- Populated from JavaScript -->
 					</ul>
 				</div>
 				<div class="col-md-3 hidden js-modules-list">
 					<ul class="list-group list-unstyled">
-						<li class="list-group-item"><span class="js-module-name">command</span></li>
-						<li class="list-group-item"><span class="js-module-name">raw</span></li>
-						<li class="list-group-item"><span class="js-module-name">script</span></li>
-						<li class="list-group-item"><span class="js-module-name">shell</span></li>
+						<!-- Populated from JavaScript -->
 					</ul>
 				</div>
 				<div class="col-md-3 hidden js-module-options-list">
@@ -70,11 +54,316 @@
 		</div>
 
 		<script src="http://yastatic.net/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.underscore.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 		<script>
 			$(document).ready(function() {
+				// data
+				var modulesData = [
+					{
+						title: 'Cloud Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Commands Modules',
+						modules: [
+							{
+								name: 'command',
+								description: 'Executes a command on a remote node',
+								options: [
+								]
+							},
+							{
+								name: 'raw',
+								description: 'Executes a low-down and dirty SSH command',
+								options: [
+								]
+							},
+							{
+								name: 'script',
+								description: 'Runs a local script on a remote node after transferring it',
+								options: [
+								]
+							},
+							{
+								name: 'shell',
+								description: 'Execute commands in nodes',
+								options: [
+								]
+							}
+						]
+					},
+					{
+						title: 'Database Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Files Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Inventory Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Messaging Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Monitoring Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Network Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Notification Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Packaging Modules',
+						modules: [
+							{
+								name: 'apt',
+								description: 'Manages apt-packages',
+								options: [
+								]
+							},
+							{
+								name: 'apt_key',
+								description: 'Add or remove an apt key',
+								options: [
+								]
+							},
+							{
+								name: 'apt_repository',
+								description: 'Add and remove APT repositories',
+								options: [
+								]
+							},
+							{
+								name: 'apt_rpm',
+								description: 'apt_rpm package manager',
+								options: [
+								]
+							},
+							{
+								name: 'composer',
+								description: 'Dependency Manager for PHP',
+								options: [
+								]
+							},
+							{
+								name: 'cpanm',
+								description: 'Manages Perl library dependencies',
+								options: [
+								]
+							},
+							{
+								name: 'easy_install',
+								description: 'Installs Python libraries',
+								options: [
+								]
+							},
+							{
+								name: 'gem',
+								description: 'Manage Ruby gems',
+								options: [
+								]
+							},
+							{
+								name: 'homebrew',
+								description: 'Package manager for Homebrew',
+								options: [
+								]
+							},
+							{
+								name: 'homebrew_cask',
+								description: 'Install/uninstall homebrew casks',
+								options: [
+								]
+							},
+							{
+								name: 'homebrew_tap',
+								description: 'Tap a Homebrew repository',
+								options: [
+								]
+							},
+							{
+								name: 'layman',
+								description: 'Manage Gentoo overlays',
+								options: [
+								]
+							},
+							{
+								name: 'macports',
+								description: 'Package manager for MacPorts',
+								options: [
+								]
+							},
+							{
+								name: 'npm',
+								description: 'Manage node.js packages with npm',
+								options: [
+								]
+							},
+							{
+								name: 'openbsd_pkg',
+								description: 'Manage packages on OpenBSD',
+								options: [
+								]
+							},
+							{
+								name: 'opkg',
+								description: 'Package manager for OpenWrt',
+								options: [
+								]
+							},
+							{
+								name: 'pacman',
+								description: 'Manage packages with pacman',
+								options: [
+								]
+							},
+							{
+								name: 'pip',
+								description: 'Manages Python library dependencies',
+								options: [
+								]
+							},
+							{
+								name: 'pkgin',
+								description: 'Package manager for SmartOS',
+								options: [
+								]
+							},
+							{
+								name: 'pkgng',
+								description: 'Package manager for FreeBSD >= 9.0',
+								options: [
+								]
+							},
+							{
+								name: 'pkgutil',
+								description: 'Manage CSW-Packages on Solaris',
+								options: [
+								]
+							},
+							{
+								name: 'portage',
+								description: 'Package manager for Gentoo',
+								options: [
+								]
+							},
+							{
+								name: 'portinstall',
+								description: 'Installing packages from FreeBSD’s ports system',
+								options: [
+								]
+							},
+							{
+								name: 'redhat_subscription',
+								description: 'Manage Red Hat Network registration and subscriptions using the subscription-manager command',
+								options: [
+								]
+							},
+							{
+								name: 'rhn_channel',
+								description: 'Adds or removes Red Hat software channels',
+								options: [
+								]
+							},
+							{
+								name: 'rhn_register',
+								description: 'Manage Red Hat Network registration using the rhnreg_ks command',
+								options: [
+								]
+							},
+							{
+								name: 'rpm_key',
+								description: 'Adds or removes a gpg key from the rpm db',
+								options: [
+								]
+							},
+							{
+								name: 'svr4pkg',
+								description: 'Manage Solaris SVR4 packages',
+								options: [
+								]
+							},
+							{
+								name: 'swdepot',
+								description: 'Manage packages with swdepot package manager (HP-UX)',
+								options: [
+								]
+							},
+							{
+								name: 'urpmi',
+								description: 'Urpmi manager',
+								options: [
+								]
+							},
+							{
+								name: 'yum',
+								description: 'Manages packages with the yum package manager',
+								options: [
+								]
+							},
+							{
+								name: 'zypper',
+								description: 'Manage packages on SUSE and openSUSE',
+								options: [
+								]
+							},
+							{
+								name: 'zypper_repository',
+								description: 'Add and remove Zypper repositories',
+								options: [
+								]
+							}
+						]
+					},
+					{
+						title: 'Source Control Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'System Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Utilities Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Web Infrastructure Modules',
+						modules: [
+						]
+					},
+					{
+						title: 'Windows Modules',
+						modules: [
+						]
+					}
+				];
 
 				// helpers
+
+				var getEntryName = function(elem) {
+					return $('span', elem).first().text();
+				};
 
 				var highlightMenuEntry = function(elem, clearOtherEntries) {
 					if (clearOtherEntries) {
@@ -95,9 +384,20 @@
 					$('.js-result-textarea').html(generateYamlCommand());
 				};
 
-				var showModulesList = function() {
+				var getModulesListOfCategory = function(categoryName) {
+					var category = _.find(modulesData, function(elem) {
+						return elem.title == categoryName;
+					});
+
+					return _.pluck(category.modules, 'name');
+				};
+
+				var showModulesList = function(elem) {
 					unhighlightAllMenuEntriesInsideDiv('.js-modules-list');
 
+					var modules = getModulesListOfCategory(getEntryName(elem));
+					$('.js-modules-list ul').html(createEntries(modules, 'js-module-name'));
+					registerEventsForModulesList();
 					$('.js-modules-list').removeClass("hidden");
 				};
 
@@ -130,13 +430,67 @@
 					$('.js-result-command').addClass('hidden');
 				};
 
+				var getCategoriesList = function() {
+					return modulesData;
+					// TODO: uncomment when all categories will be covered
+					//return _.pluck(modulesData, 'title');
+				};
+
+				var createEntries = function(names, elemClassName) {
+					// TODO: remove 'disable' when all categories will be covered
+					return _.map(names, function(elemName) {
+						var disabledClass = !_.isUndefined(elemName.modules) && elemName.modules.length == 0 ? ' disabled' : '';
+						return '<li class="list-group-item' + disabledClass + '">'
+								+ '<span class="' + elemClassName + '">'
+									+ (elemName.title || elemName) // TODO: remove title when all categories will be covered
+								+ '</span>'
+							+ '</li>';
+					});
+				};
+
+				var showCategoriesList = function() {
+					$('.js-categories-list ul').html(createEntries(getCategoriesList(), 'js-category-name'));
+					registerEventsForCategoriesList();
+				};
+
+				var registerEventsForCategoriesList = function() {
+					/// TODO: remove 'disabled' when all categories will be covered
+					$('.js-categories-list li.list-group-item:not(.disabled)')
+						.hover(function() {
+							$(this).toggleClass('active');
+						})
+						.click(function(e) {
+							$(this).trigger('app:category-selected');
+						});
+				};
+
+				var registerEventsForModulesList = function() {
+					$('.js-modules-list li.list-group-item')
+						.hover(function() {
+							$(this).toggleClass('active');
+						})
+						.click(function() {
+							$(this).trigger('app:module-selected');
+						});
+				};
+
+				var registerEventsForModuleOptionsList = function() {
+					$('.js-module-option-text-value').change(function(event) {
+						if ($(event.target).val() === '') {
+							$(this).parent('.list-group-item').trigger('app:module-option-unselected');
+						} else {
+							$(this).parent('.list-group-item').trigger('app:module-option-selected');
+						}
+					});
+				};
+
 				// define callbacks
 
 				var onCategorySelection = function(event) {
 					highlightMenuEntry(event.target, true);
 					hideModuleOptionsList();
 					hideYamlDocument();
-					showModulesList();
+					showModulesList(event.target);
 				};
 
 				var onModuleSelection = function(event) {
@@ -175,31 +529,9 @@
 					return moduleName + ":\n  " + moduleOptions.join("\n  ");
 				};
 
-				// initialize
+				// start
 
-				$('.js-categories-list li.list-group-item')
-					.hover(function() {
-						$(this).toggleClass('active');
-					})
-					.click(function(e) {
-						$(this).trigger('app:category-selected');
-					});
-				
-				$('.js-modules-list li.list-group-item')
-					.hover(function() {
-						$(this).toggleClass('active');
-					})
-					.click(function() {
-						$(this).trigger('app:module-selected');
-					});
-
-				$('.js-module-option-text-value').change(function(event) {
-					if ($(event.target).val() === '') {
-						$(this).parent('.list-group-item').trigger('app:module-option-unselected');
-					} else {
-						$(this).parent('.list-group-item').trigger('app:module-option-selected');
-					}
-				});
+				showCategoriesList();
 			});
 		</script>
 	</body>
