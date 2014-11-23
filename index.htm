@@ -638,7 +638,9 @@
 
 				var getModulesListOfCategory = function(categoryName) {
 					var category = findCategoryByName(categoryName);
-					return _.pluck(category.modules, 'name');
+					return category.modules;
+					// TODO: uncomment when all modules will be covered
+					//return _.pluck(category.modules, 'name');
 				};
 
 				var showModulesList = function(elem) {
@@ -705,10 +707,13 @@
 				var createEntries = function(names, elemClassName) {
 					// TODO: remove 'disable' when all categories will be covered
 					return _.map(names, function(elemName) {
-						var disabledClass = !_.isUndefined(elemName.modules) && elemName.modules.length == 0 ? ' disabled' : '';
+						var maybeDisabled = !_.isUndefined(elemName.modules) || !_.isUndefined(elemName.options);
+						var withoutModules = !_.isUndefined(elemName.modules) && elemName.modules.length == 0; // only for categories
+						var withoutOptions = !_.isUndefined(elemName.options) && elemName.options.length == 0; // only for modules
+						var disabledClass = maybeDisabled && (withoutModules || withoutOptions) ? ' disabled' : '';
 						return '<li class="list-group-item' + disabledClass + '">'
 								+ '<span class="' + elemClassName + '">'
-									+ (elemName.title || elemName) // TODO: remove title when all categories will be covered
+									+ (elemName.title || elemName.name || elemName) // TODO: remove title when all categories will be covered
 								+ '</span>'
 							+ '</li>';
 					});
@@ -730,7 +735,7 @@
 				};
 
 				var registerEventsForCategoriesList = function() {
-					/// TODO: remove 'disabled' when all categories will be covered
+					// TODO: remove 'disabled' when all categories will be covered
 					$('.js-categories-list .list-group-item:not(.disabled)')
 						.hover(function() {
 							$(this).toggleClass('active');
@@ -741,7 +746,8 @@
 				};
 
 				var registerEventsForModulesList = function() {
-					$('.js-modules-list .list-group-item')
+					// TODO: remove 'disabled' when all modules will be covered
+					$('.js-modules-list .list-group-item:not(.disabled)')
 						.hover(function() {
 							$(this).toggleClass('active');
 						})
