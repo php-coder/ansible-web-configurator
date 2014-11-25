@@ -771,12 +771,8 @@
 
 				var showModuleOptionsList = function(elem) {
 					var modules = getOptionsListOfModule(getEntryName(elem));
-					var modulesNames = [];
-					for (var moduleName in modules) {
-						modulesNames.push(moduleName);
-					}
 
-					$('.js-module-options-list ul').html(createEntriesForModuleOptions(modulesNames, 'js-module-option-name'));
+					$('.js-module-options-list ul').html(createEntriesForModuleOptions(modules, 'js-module-option-name'));
 					registerEventsForModuleOptionsList();
 
 					$('.js-module-options-list').removeClass('hidden');
@@ -825,11 +821,12 @@
 				};
 
 				var createEntriesForModuleOptions = function(names, elemClassName) {
-					return _.map(names, function(elemName) {
+					return _.map(names, function(value, key) {
 							// TODO: handle more types
 							return '<li class="list-group-item">' +
-										'<span class="' + elemClassName + '">' + elemName + '</span>&nbsp;' +
+										'<span class="' + elemClassName + '">' + key + '</span>&nbsp;' +
 										'<input type="text" class="js-module-option-text-value" autocomplete="off" />' +
+										(value.since_version ? '<span class="label label-warning pull-right">' + value.since_version + '</span>' : '') +
 									'</li>';
 					});
 				};
