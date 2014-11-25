@@ -826,13 +826,23 @@
 							result += '<span class="' + elemClassName + '">' + key + '</span>&nbsp;';
 							if (value.type === 'choice' && value.choices && value.choices.length > 0) {
 								result += '<select class="js-module-option-value js-module-option-select-value">';
-								result += '<option value=""></option>'
-								_.forEach(value.choices, function(value) {
-									result += '<option value="' + value + '">' + value + '</option>';
+								if (!value.default_value) {
+									result += '<option value=""></option>';
+								}
+								_.forEach(value.choices, function(choice) {
+									if (value.default_value === choice) {
+										result += '<option value="' + choice + '" selected="selected">' + choice + '</option>';
+									} else {
+										result += '<option value="' + choice + '">' + choice + '</option>';
+									}
 								});
 								result += '</select>';
 							} else {
-								result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" />';
+								if (value.default_value) {
+									result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" value="' + value.default_value + '" />';
+								} else {
+									result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" />';
+								}
 							}
 							if (value.since_version) {
 								result += '<span class="label label-warning pull-right">' + value.since_version + '</span>';
