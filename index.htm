@@ -822,12 +822,23 @@
 
 				var createEntriesForModuleOptions = function(names, elemClassName) {
 					return _.map(names, function(value, key) {
-							// TODO: handle more types
-							return '<li class="list-group-item">' +
-										'<span class="' + elemClassName + '">' + key + '</span>&nbsp;' +
-										'<input type="text" class="js-module-option-text-value" autocomplete="off" />' +
-										(value.since_version ? '<span class="label label-warning pull-right">' + value.since_version + '</span>' : '') +
-									'</li>';
+							var result = '<li class="list-group-item">';
+							result += '<span class="' + elemClassName + '">' + key + '</span>&nbsp;';
+							if (value.type === 'choice' && value.choices && value.choices.length > 0) {
+								result += '<select class="js-module-option-value js-module-option-select-value">';
+								result += '<option value=""></option>'
+								_.forEach(value.choices, function(value) {
+									result += '<option value="' + value + '">' + value + '</option>';
+								});
+								result += '</select>';
+							} else {
+								result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" />';
+							}
+							if (value.since_version) {
+								result += '<span class="label label-warning pull-right">' + value.since_version + '</span>';
+							}
+							result += '</li>';
+							return result;
 					});
 				};
 
@@ -859,7 +870,7 @@
 				};
 
 				var registerEventsForModuleOptionsList = function() {
-					$('.js-module-options-list .js-module-option-text-value').change(function(event) {
+					$('.js-module-options-list .js-module-option-value').change(function(event) {
 						if ($(event.target).val() === '') {
 							$(this).parent('.list-group-item').trigger('app:module-option-unselected');
 						} else {
@@ -910,7 +921,7 @@
 				var getFormattedListModuleOptionsWithValues = function(separator) {
 					var moduleOptions = [];
 					$('.js-module-options-list .list-group-item-info').each(function(el) {
-						var option = $('.js-module-option-name', this).text() + separator + ' ' + $('.js-module-option-text-value', this).val();
+						var option = $('.js-module-option-name', this).text() + separator + ' ' + $('.js-module-option-value', this).val();
 						moduleOptions.push(option);
 					});
 					return moduleOptions;
