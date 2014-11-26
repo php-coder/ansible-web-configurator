@@ -1130,6 +1130,7 @@
 								+ '</span>'
 								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
 								+ (elemName.since_version ? '<span class="label label-warning pull-right">' + elemName.since_version + '</span>' : '')
+								+ (elemName.description ? '<br /><small>' + elemName.description + '</small>' : '')
 							+ '</li>';
 					});
 				};
@@ -1161,6 +1162,7 @@
 							if (value.since_version) {
 								result += '<span class="label label-warning pull-right">' + value.since_version + '</span>';
 							}
+							result += '<br/><small>' + value.description + '</small>';
 							result += '</li>';
 							return result;
 					});
