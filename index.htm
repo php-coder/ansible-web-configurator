@@ -284,7 +284,74 @@
 								description: 'Manages apt-packages',
 								type: 'core',
 								options: {
-
+									cache_valid_time: {
+										type: 'string',
+										required: false,
+										description: 'if update_cache is specified and the last run is less or equal than cache_valid_time seconds ago, the update_cache gets skipped'
+									},
+									deb: {
+										type: 'string',
+										required: false,
+										since_version: '1.6',
+										description: 'path to a .deb package on the remote machine'
+									},
+									default_release: {
+										type: 'string',
+										required: false,
+										description: 'corresponds to the -t option for apt and sets pin priorities'
+									},
+									dpkg_options: {
+										type: 'string',
+										required: false,
+										default_value: 'force-confdef,force-confold',
+										description: "add dpkg options to apt command. Defaults to '-o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"'Options should be supplied as comma separated list"
+									},
+									force: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'if yes, force installs/removes'
+									},
+									install_recommends: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'yes',
+										description: "corresponds to the --no-install-recommends option for apt. Default behavior (yes) replicates apt's default behavior; no does not install recommended packages. Suggested packages are never installed"
+									},
+									name: {
+										type: 'string',
+										required: false,
+										description: 'a  package name, like foo, or package specifier with version, like foo=1.0. Name wildcards (fnmatch) like apt* and version wildcards like foo=1.0* are also supported'
+									},
+									purge: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										description: 'will force purging of configuration files if the module state is set to absent'
+									},
+									state: {
+										type: 'choice',
+										choices: ['latest', 'absent', 'present'],
+										required: false,
+										default_value: 'present',
+										description: 'indicates the desired package state. latest ensures that the latest version is installed'
+									},
+									update_cache: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										description: 'run the equivalent of apt-get update before the operation. Can be run as part of the package installation or as a separate step'
+									},
+									upgrade: {
+										type: 'choice',
+										choices: ['yes', 'safe', 'full', 'dist'],
+										required: false,
+										since_version: '1.1',
+										default_value: 'yes',
+										description: 'if yes or safe, performs an aptitude safe-upgrade. If full, performs an aptitude full-upgrade. If dist, performs an apt-get dist-upgrade. Note: This does not upgrade a specific package, use state=latest for that'
+									}
 								}
 							},
 							{
