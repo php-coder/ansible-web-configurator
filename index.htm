@@ -1120,8 +1120,8 @@
 					// TODO: remove 'disable' when all categories will be covered
 					return _.map(names, function(elemName) {
 						var maybeDisabled = !_.isUndefined(elemName.modules) || !_.isUndefined(elemName.options);
-						var withoutModules = !_.isUndefined(elemName.modules) && elemName.modules.length == 0; // only for categories
-						var withoutOptions = !_.isUndefined(elemName.options) && elemName.options.length == 0; // only for modules
+						var withoutModules = !_.isUndefined(elemName.modules) && _.isEmpty(elemName.modules); // only for categories
+						var withoutOptions = !_.isUndefined(elemName.options) && _.isEmpty(elemName.options); // only for modules
 						var isDisabled = maybeDisabled && (withoutModules || withoutOptions);
 						var disabledClass = isDisabled ? ' disabled' : '';
 						return '<li class="list-group-item' + disabledClass + '">'
