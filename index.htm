@@ -614,8 +614,52 @@
 							{
 								name: 'yum',
 								description: 'Manages packages with the yum package manager',
-								options: [
-								]
+								type: 'core',
+								options: {
+									conf_file: {
+										type: 'string',
+										required: false,
+										since_version: '0.6',
+										description: 'the remote yum configuration file to use for the transaction'
+									},
+									disable_gpg_check: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										since_version: '1.2',
+										default_value: 'no',
+										description: 'whether to disable the GPG checking of signatures of packages being installed. Has an effect only if state is present or latest'
+									},
+									disablerepo: {
+										type: 'string',
+										required: false,
+										since_version: '0.9',
+										description: 'repoid of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ","'
+									},
+									enablerepo: {
+										type: 'string',
+										required: false,
+										since_version: '0.9',
+										description: 'repoid of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ","'
+									},
+									list: {
+										type: 'string',
+										required: false,
+										description: 'various (non-idempotent) commands for usage with /usr/bin/ansible and not playbooks'
+									},
+									name: {
+										type: 'string',
+										required: true,
+										description: "package name, or package specifier with version, like name-1.0. When using state=latest, this can be '*' which means run: yum -y update. You can also pass a url or a local path to a rpm file"
+									},
+									state: {
+										type: 'choice',
+										choices: ['present', 'latest', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'whether to install (present, latest), or remove (absent) a package'
+									}
+								}
 							},
 							{
 								name: 'zypper',
