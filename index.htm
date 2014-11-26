@@ -63,36 +63,36 @@
 										type: 'string',
 										required: false,
 										since_version: '0.6',
-										description: 'cd into this directory before running the command'
+										description: 'Cd into this directory before running the command'
 									},
 									creates: {
 										type: 'string',
 										required: false,
-										description: 'a filename, when it already exists, this step will not be run'
+										description: 'A filename, when it already exists, this step will not be run'
 									},
 									executable: {
 										type: 'string',
 										required: false,
 										since_version: '0.9',
-										description: 'change the shell used to execute the command. Should be an absolute path to the executable'
+										description: 'Change the shell used to execute the command. Should be an absolute path to the executable'
 									},
 									free_form: {
 										type: 'string',
 										required: true,
-										description: 'takes a free form command to run'
+										description: 'Takes a free form command to run'
 									},
 									removes: {
 										type: 'string',
 										required: false,
 										since_version: '0.8',
-										description: 'a filename, when it does not exist, this step will not be run'
+										description: 'A filename, when it does not exist, this step will not be run'
 									},
 									warn: {
 										type: 'boolean',
 										required: false,
 										since_version: '1.8',
 										default_value: 'True',
-										description: 'if command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false'
+										description: 'If command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false'
 									}
 								}
 							},
@@ -105,12 +105,12 @@
 										type: 'string',
 										required: false,
 										since_version: '1.0',
-										description: 'change the shell used to execute the command. Should be an absolute path to the executable'
+										description: 'Change the shell used to execute the command. Should be an absolute path to the executable'
 									},
 									free_form: {
 										type: 'string',
 										required: true,
-										description: 'takes a free form command to run'
+										description: 'Takes a free form command to run'
 									}
 								}
 							},
@@ -123,18 +123,18 @@
 										type: 'string',
 										required: false,
 										since_version: '1.5',
-										description: 'a filename, when it already exists, this step will not be run'
+										description: 'A filename, when it already exists, this step will not be run'
 									},
 									free_form: {
 										type: 'string',
 										required: true,
-										description: 'path to the local script file followed by optional arguments'
+										description: 'Path to the local script file followed by optional arguments'
 									},
 									removes: {
 										type: 'string',
 										required: false,
 										since_version: '1.5',
-										description: 'a filename, when it does not exist, this step will not be run'
+										description: 'A filename, when it does not exist, this step will not be run'
 									}
 								}
 							},
@@ -147,36 +147,36 @@
 										type: 'string',
 										required: false,
 										since_version: '0.6',
-										description: 'cd into this directory before running the command'
+										description: 'Cd into this directory before running the command'
 									},
 									creates: {
 										type: 'string',
 										required: false,
-										description: 'a filename, when it already exists, this step will not be run'
+										description: 'A filename, when it already exists, this step will not be run'
 									},
 									executable: {
 										type: 'string',
 										required: false,
 										since_version: '0.9',
-										description: 'change the shell used to execute the command. Should be an absolute path to the executable'
+										description: 'Change the shell used to execute the command. Should be an absolute path to the executable'
 									},
 									free_form: {
 										type: 'string',
 										required: true,
-										description: 'takes a free form command to run'
+										description: 'Takes a free form command to run'
 									},
 									removes: {
 										type: 'string',
 										required: false,
 										since_version: '0.8',
-										description: 'a filename, when it does not exist, this step will not be run'
+										description: 'A filename, when it does not exist, this step will not be run'
 									},
 									warn: {
 										type: 'boolean',
 										required: false,
 										since_version: '1.8',
 										default_value: 'True',
-										description: 'if command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false'
+										description: 'If command warnings are on in ansible.cfg, do not warn about this particular line if set to no/false'
 									}
 								}
 							}
@@ -203,12 +203,12 @@
 									groups: {
 										type: 'string',
 										required: false,
-										description: 'the groups to add the hostname to, comma separated'
+										description: 'The groups to add the hostname to, comma separated'
 									},
 									name: {
 										type: 'string',
 										required: true,
-										description: 'the hostname/ip of the host to add to the inventory, can include a colon and a port number'
+										description: 'The hostname/ip of the host to add to the inventory, can include a colon and a port number'
 									}
 								}
 							},
@@ -220,7 +220,7 @@
 									key: {
 										type: 'string',
 										required: true,
-										description: 'the variables whose values will be used as groups'
+										description: 'The variables whose values will be used as groups'
 									}
 								}
 							}
@@ -287,62 +287,62 @@
 									cache_valid_time: {
 										type: 'string',
 										required: false,
-										description: 'if update_cache is specified and the last run is less or equal than cache_valid_time seconds ago, the update_cache gets skipped'
+										description: 'If update_cache is specified and the last run is less or equal than cache_valid_time seconds ago, the update_cache gets skipped'
 									},
 									deb: {
 										type: 'string',
 										required: false,
 										since_version: '1.6',
-										description: 'path to a .deb package on the remote machine'
+										description: 'Path to a .deb package on the remote machine'
 									},
 									default_release: {
 										type: 'string',
 										required: false,
-										description: 'corresponds to the -t option for apt and sets pin priorities'
+										description: 'Corresponds to the -t option for apt and sets pin priorities'
 									},
 									dpkg_options: {
 										type: 'string',
 										required: false,
 										default_value: 'force-confdef,force-confold',
-										description: "add dpkg options to apt command. Defaults to '-o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"'Options should be supplied as comma separated list"
+										description: "Add dpkg options to apt command. Defaults to '-o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"'Options should be supplied as comma separated list"
 									},
 									force: {
 										type: 'choice',
 										choices: ['yes', 'no'],
 										required: false,
 										default_value: 'no',
-										description: 'if yes, force installs/removes'
+										description: 'If yes, force installs/removes'
 									},
 									install_recommends: {
 										type: 'choice',
 										choices: ['yes', 'no'],
 										required: false,
 										default_value: 'yes',
-										description: "corresponds to the --no-install-recommends option for apt. Default behavior (yes) replicates apt's default behavior; no does not install recommended packages. Suggested packages are never installed"
+										description: "Corresponds to the --no-install-recommends option for apt. Default behavior (yes) replicates apt's default behavior; no does not install recommended packages. Suggested packages are never installed"
 									},
 									name: {
 										type: 'string',
 										required: false,
-										description: 'a  package name, like foo, or package specifier with version, like foo=1.0. Name wildcards (fnmatch) like apt* and version wildcards like foo=1.0* are also supported'
+										description: 'A  package name, like foo, or package specifier with version, like foo=1.0. Name wildcards (fnmatch) like apt* and version wildcards like foo=1.0* are also supported'
 									},
 									purge: {
 										type: 'choice',
 										choices: ['yes', 'no'],
 										required: false,
-										description: 'will force purging of configuration files if the module state is set to absent'
+										description: 'Will force purging of configuration files if the module state is set to absent'
 									},
 									state: {
 										type: 'choice',
 										choices: ['latest', 'absent', 'present'],
 										required: false,
 										default_value: 'present',
-										description: 'indicates the desired package state. latest ensures that the latest version is installed'
+										description: 'Indicates the desired package state. latest ensures that the latest version is installed'
 									},
 									update_cache: {
 										type: 'choice',
 										choices: ['yes', 'no'],
 										required: false,
-										description: 'run the equivalent of apt-get update before the operation. Can be run as part of the package installation or as a separate step'
+										description: 'Run the equivalent of apt-get update before the operation. Can be run as part of the package installation or as a separate step'
 									},
 									upgrade: {
 										type: 'choice',
@@ -350,7 +350,7 @@
 										required: false,
 										since_version: '1.1',
 										default_value: 'yes',
-										description: 'if yes or safe, performs an aptitude safe-upgrade. If full, performs an aptitude full-upgrade. If dist, performs an apt-get dist-upgrade. Note: This does not upgrade a specific package, use state=latest for that'
+										description: 'If yes or safe, performs an aptitude safe-upgrade. If full, performs an aptitude full-upgrade. If dist, performs an apt-get dist-upgrade. Note: This does not upgrade a specific package, use state=latest for that'
 									}
 								}
 							},
@@ -363,48 +363,48 @@
 									data: {
 										type: 'string',
 										required: false,
-										description: 'keyfile contents'
+										description: 'Keyfile contents'
 									},
 									file: {
 										type: '',
 										required: false,
-										description: 'keyfile path'
+										description: 'Keyfile path'
 									},
 									id: {
 										type: '',
 										required: false,
-										description: 'identifier of key'
+										description: 'Identifier of key'
 									},
 									keyring: {
 										type: 'string',
 										required: false,
 										since_version: '1.3',
-										description: 'path to specific keyring file in /etc/apt/trusted.gpg.d'
+										description: 'Path to specific keyring file in /etc/apt/trusted.gpg.d'
 									},
 									keyserver: {
 										type: 'string',
 										required: false,
 										since_version: '1.6',
-										description: 'keyserver to retrieve key from'
+										description: 'Keyserver to retrieve key from'
 									},
 									state: {
 										type: 'choice',
 										choices: ['absent', 'absent'],
 										required: false,
 										default_value: 'present',
-										description: 'used to specify if key is being added or revoked'
+										description: 'Used to specify if key is being added or revoked'
 									},
 									url: {
 										type: 'string',
 										required: false,
-										description: 'url to retrieve key from'
+										description: 'Url to retrieve key from'
 									},
 									validate_certs: {
 										type: 'choice',
 										choices: ['yes', 'no'],
 										required: false,
 										default_value: 'yes',
-										description: 'if no, SSL certificates for the target url will not be validated. This should only be used on personally controlled sites using self-signed certificates'
+										description: 'If no, SSL certificates for the target url will not be validated. This should only be used on personally controlled sites using self-signed certificates'
 									}
 								}
 							},
@@ -418,26 +418,26 @@
 										required: false,
 										since_version: '1.6',
 										default_value: '420',
-										description: 'the octal mode for newly created files in sources.list.d'
+										description: 'The octal mode for newly created files in sources.list.d'
 									},
 									repo: {
 										type: 'string',
 										required: true,
-										description: 'a source string for the repository'
+										description: 'A source string for the repository'
 									},
 									state: {
 										type: 'choice',
 										choices: ['absent', 'present'],
 										required: false,
 										default_value: 'present',
-										description: 'a source string state'
+										description: 'A source string state'
 									},
 									update_cache: {
 										type: 'choice',
 										choices: ['yes', 'no'],
 										required: false,
 										default_value: 'yes',
-										description: 'run the equivalent of apt-get update when a change occurs. Cache updates are run after making changes'
+										description: 'Run the equivalent of apt-get update when a change occurs. Cache updates are run after making changes'
 									},
 									validate_certs: {
 										type: 'choice',
@@ -620,7 +620,7 @@
 										type: 'string',
 										required: false,
 										since_version: '0.6',
-										description: 'the remote yum configuration file to use for the transaction'
+										description: 'The remote yum configuration file to use for the transaction'
 									},
 									disable_gpg_check: {
 										type: 'choice',
@@ -628,36 +628,36 @@
 										required: false,
 										since_version: '1.2',
 										default_value: 'no',
-										description: 'whether to disable the GPG checking of signatures of packages being installed. Has an effect only if state is present or latest'
+										description: 'Whether to disable the GPG checking of signatures of packages being installed. Has an effect only if state is present or latest'
 									},
 									disablerepo: {
 										type: 'string',
 										required: false,
 										since_version: '0.9',
-										description: 'repoid of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ","'
+										description: 'Repoid of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ","'
 									},
 									enablerepo: {
 										type: 'string',
 										required: false,
 										since_version: '0.9',
-										description: 'repoid of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ","'
+										description: 'Repoid of repositories to disable for the install/update operation. These repos will not persist beyond the transaction. When specifying multiple repos, separate them with a ","'
 									},
 									list: {
 										type: 'string',
 										required: false,
-										description: 'various (non-idempotent) commands for usage with /usr/bin/ansible and not playbooks'
+										description: 'Various (non-idempotent) commands for usage with /usr/bin/ansible and not playbooks'
 									},
 									name: {
 										type: 'string',
 										required: true,
-										description: "package name, or package specifier with version, like name-1.0. When using state=latest, this can be '*' which means run: yum -y update. You can also pass a url or a local path to a rpm file"
+										description: "Package name, or package specifier with version, like name-1.0. When using state=latest, this can be '*' which means run: yum -y update. You can also pass a url or a local path to a rpm file"
 									},
 									state: {
 										type: 'choice',
 										choices: ['present', 'latest', 'absent'],
 										required: false,
 										default_value: 'present',
-										description: 'whether to install (present, latest), or remove (absent) a package'
+										description: 'Whether to install (present, latest), or remove (absent) a package'
 									}
 								}
 							},
