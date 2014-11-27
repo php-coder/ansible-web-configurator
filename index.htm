@@ -1040,6 +1040,46 @@
 								description: 'Manage services',
 								type: 'core',
 								options: {
+									arguments: {
+                                        type: 'string',
+                                        required: false,
+                                        description: 'Additional arguments provided on the command line'
+                                    },
+                                    enabled: {
+                                        type: 'choice',
+                                        choices: ['yes', 'no'],
+                                        required: false,
+                                        description: 'Whether the service should start on boot'
+                                    },
+                                    name: {
+                                        type: 'string',
+                                        required: true,
+                                        description: 'Name of the service'
+                                    },
+                                    pattern: {
+                                        type: 'string',
+                                        required: false,
+                                        since_version: '0.7',
+                                        description: 'If the service does not respond to the status command, name a substring to look for as would be found in the output of the ps command as a stand-in for a status result. If the string is found, the service will be assumed to be running'
+                                    },
+                                    runlevel: {
+                                        type: 'string',
+                                        required: false,
+                                        default_value: 'default',
+                                        description: 'For OpenRC init scripts (ex: Gentoo) only. The runlevel that this service belongs to'
+                                    },
+                                    sleep: {
+                                        type: 'string',
+                                        required: false,
+                                        since_version: '1.3',
+                                        description: 'If the service is being restarted then sleep this many seconds between the stop and start command. This helps to workaround badly behaving init scripts that exit immediately after signaling a process to stop'
+                                    },
+                                    state: {
+                                        type: 'choice',
+                                        choices: ['started', 'stopped', 'restarted', 'reloaded'],
+                                        required: false,
+                                        description: 'started/stopped are idempotent actions that will not run commands unless necessary. restarted will always bounce the service. reloaded will always reload'
+                                    }
 								}
 							},
 							{
