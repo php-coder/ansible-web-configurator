@@ -1536,8 +1536,13 @@
 				var getFormattedListModuleOptionsWithValues = function(separator) {
 					var moduleOptions = [];
 					$('.js-module-options-list .list-group-item-info').each(function(el) {
-						var option = $('.js-module-option-name', this).text() + separator + ' ' + $('.js-module-option-value', this).val();
-						moduleOptions.push(option);
+						var option = $('.js-module-option-name', this).text();
+						var value = $('.js-module-option-value', this).val();
+						if (value.indexOf("{{") >= 0 && value.indexOf("}}") >= 0) {
+							value = '"' + value + '"';
+						}
+						var text = option + separator + ' ' + value;
+						moduleOptions.push(text);
 					});
 					return moduleOptions;
 				};
