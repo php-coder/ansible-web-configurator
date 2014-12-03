@@ -12,6 +12,12 @@
 			.js-modules-list .list-group-item:not(.disabled):hover {
 				cursor: pointer;
 			}
+			.container-fluid {
+				margin: 5px;
+			}
+			.js-categories-list, .js-modules-list, .js-module-options-list, .js-result-command {
+				padding: 5px;
+			}
 		</style>
 	</head>
 	<body>
@@ -33,7 +39,7 @@
 					</ul>
 				</div>
 				<div class="col-md-4 hidden js-result-command">
-					<textarea class="js-result-textarea" rows="20" cols="50" autocomplete="off" readonly>
+					<textarea class="js-result-textarea" rows="25" autocomplete="off" readonly style="width: 100%;">
 					</textarea>
 				</div>
 			</div>
@@ -2286,7 +2292,7 @@
 
 							// FIXME: add handler only for invisible entries
 							$('html, body').animate({
-								scrollTop: $('.js-module-options-list').offset().top
+								scrollTop: 0
 							}, 200);
 						});
 				};
