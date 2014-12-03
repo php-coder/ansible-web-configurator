@@ -2148,13 +2148,11 @@
 				var getModulesListOfCategory = function(categoryName) {
 					var category = findCategoryByName(categoryName);
 					return category.modules;
-					// TODO: uncomment when all modules will be covered
-					//return _.pluck(category.modules, 'name');
 				};
 
 				var showModulesList = function(elem) {
 					var modules = getModulesListOfCategory(getEntryName(elem));
-					$('.js-modules-list ul').html(createEntries(modules, 'js-module-name'));
+					$('.js-modules-list ul').html(createEntriesForModules(modules, 'js-module-name'));
 					registerEventsForModulesList();
 					$('.js-modules-list').removeClass("hidden");
 				};
@@ -2207,18 +2205,24 @@
 					return _.pluck(modulesData, 'title');
 				};
 
-				var createEntries = function(names, elemClassName) {
-					// TODO: remove 'disable' when all modules will be covered
+				var createEntriesForCategories = function(names, elemClassName) {
 					return _.map(names, function(elemName) {
-						var isDisabled = !_.isUndefined(elemName.options) && _.isEmpty(elemName.options); // only for modules
+						return '<li class="list-group-item">'
+								+ '<span class="' + elemClassName + '">' + elemName + '</span>'
+							+ '</li>';
+					});
+				};
+
+				var createEntriesForModules = function(elems, elemClassName) {
+					// TODO: remove 'disable' when all modules will be covered
+					return _.map(elems, function(elem) {
+						var isDisabled = !_.isUndefined(elem.options) && _.isEmpty(elem.options);
 						var disabledClass = isDisabled ? ' disabled' : '';
 						return '<li class="list-group-item' + disabledClass + '">'
-								+ '<span class="' + elemClassName + '">'
-									+ (elemName.name || elemName)
-								+ '</span>'
+								+ '<span class="' + elemClassName + '">' + elem.name + '</span>'
 								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
-								+ (elemName.since_version ? '<span class="label label-warning pull-right">' + elemName.since_version + '</span>' : '')
-								+ (elemName.description ? '<br /><small>' + elemName.description + '</small>' : '')
+								+ (elem.since_version ? '<span class="label label-warning pull-right">' + elem.since_version + '</span>' : '')
+								+ (elem.description ? '<br /><small>' + elem.description + '</small>' : '')
 							+ '</li>';
 					});
 				};
@@ -2257,7 +2261,7 @@
 				};
 
 				var showCategoriesList = function() {
-					$('.js-categories-list ul').html(createEntries(getCategoriesList(), 'js-category-name'));
+					$('.js-categories-list ul').html(createEntriesForCategories(getCategoriesList(), 'js-category-name'));
 					registerEventsForCategoriesList();
 				};
 
