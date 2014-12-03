@@ -6,9 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Ansible configurator</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-		<!-- Remove .disabled when all categories/modules will be covered -->
+		<!-- TODO: Remove .disabled when all modules will be covered -->
 		<style type="text/css">
-			.js-categories-list li.list-group-item:not(.disabled):hover,
+			.js-categories-list .list-group-item:hover,
 			.js-modules-list li.list-group-item:not(.disabled):hover {
 				cursor: pointer;
 			}
@@ -2205,22 +2205,17 @@
 				};
 
 				var getCategoriesList = function() {
-					return modulesData;
-					// TODO: uncomment when all categories will be covered
-					//return _.pluck(modulesData, 'title');
+					return _.pluck(modulesData, 'title');
 				};
 
 				var createEntries = function(names, elemClassName) {
-					// TODO: remove 'disable' when all categories will be covered
+					// TODO: remove 'disable' when all modules will be covered
 					return _.map(names, function(elemName) {
-						var maybeDisabled = !_.isUndefined(elemName.modules) || !_.isUndefined(elemName.options);
-						var withoutModules = !_.isUndefined(elemName.modules) && _.isEmpty(elemName.modules); // only for categories
-						var withoutOptions = !_.isUndefined(elemName.options) && _.isEmpty(elemName.options); // only for modules
-						var isDisabled = maybeDisabled && (withoutModules || withoutOptions);
+						var isDisabled = !_.isUndefined(elemName.options) && _.isEmpty(elemName.options); // only for modules
 						var disabledClass = isDisabled ? ' disabled' : '';
 						return '<li class="list-group-item' + disabledClass + '">'
 								+ '<span class="' + elemClassName + '">'
-									+ (elemName.title || elemName.name || elemName) // TODO: remove title when all categories will be covered
+									+ (elemName.name || elemName)
 								+ '</span>'
 								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
 								+ (elemName.since_version ? '<span class="label label-warning pull-right">' + elemName.since_version + '</span>' : '')
@@ -2268,8 +2263,7 @@
 				};
 
 				var registerEventsForCategoriesList = function() {
-					// TODO: remove 'disabled' when all categories will be covered
-					$('.js-categories-list .list-group-item:not(.disabled)')
+					$('.js-categories-list .list-group-item')
 						.hover(function() {
 							$(this).toggleClass('active');
 						})
