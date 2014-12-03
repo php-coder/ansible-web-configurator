@@ -2137,6 +2137,14 @@
 					$(elem).addClass('list-group-item-info');
 				};
 
+				var highlightRequiredFields = function(elem) {
+					$(elem).parent().find('.js-module-option-required:not(.list-group-item-info)').addClass('list-group-item-danger');
+				};
+
+				var unhighlightRequiredField = function(elem) {
+					$(elem).removeClass('list-group-item-danger');
+				};
+
 				var unhighlightMenuEntry = function(elem) {
 					$(elem).removeClass('list-group-item-info');
 				};
@@ -2235,7 +2243,11 @@
 
 				var createEntriesForModuleOptions = function(names, elemClassName) {
 					return _.map(names, function(value, key) {
-							var result = '<li class="list-group-item">';
+							var entryClasses = '';
+							if (value.required) {
+								entryClasses = ' js-module-option-required';
+							}
+							var result = '<li class="list-group-item' + entryClasses + '">';
 							result += '<span class="' + elemClassName + '">' + key + '</span>&nbsp;';
 							if (value.type === 'choice' && value.choices && value.choices.length > 0) {
 								result += '<select class="js-module-option-value js-module-option-select-value">';
@@ -2324,11 +2336,14 @@
 
 				var onModuleOptionSelection = function(event) {
 					highlightMenuEntry(event.target);
+					unhighlightRequiredField(event.target);
+					highlightRequiredFields(event.target);
 					regenerateYamlDocument();
 				};
 
 				var onModuleOptionUnselection = function(event) {
 					unhighlightMenuEntry(event.target);
+					highlightRequiredFields(event.target);
 					clearModuleOptionValue(event.target);
 					regenerateYamlDocument();
 				};
