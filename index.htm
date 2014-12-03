@@ -2283,6 +2283,11 @@
 						})
 						.click(function() {
 							$(this).trigger('app:module-selected');
+
+							// FIXME: add handler only for invisible entries
+							$('html, body').animate({
+								scrollTop: $('.js-module-options-list').offset().top
+							}, 200);
 						});
 				};
 
