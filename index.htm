@@ -49,6 +49,489 @@
 					{
 						title: 'Cloud',
 						modules: [
+							{
+								name: 'azure',
+								description: 'Create or terminate a virtual machine in azure',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'cloudformation',
+								description: 'Create a AWS CloudFormation stack',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'digital_ocean',
+								description: 'Create/delete a droplet/SSH_key in DigitalOcean',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'digital_ocean_domain',
+								description: 'Create/delete a DNS record in DigitalOcean',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'digital_ocean_sshkey',
+								description: 'Create/delete an SSH key in DigitalOcean',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'docker',
+								description: 'Manage docker containers',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2',
+								description: 'Create, terminate, start or stop an instance in ec2, return instanceid',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_ami',
+								description: 'Create or destroy an image in ec2, return imageid',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_ami_search',
+								description: 'Retrieve AWS AMI for a given operating system',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_asg',
+								description: 'Create or delete AWS Autoscaling Groups',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_eip',
+								description: 'Associate an EC2 elastic IP with an instance',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_elb',
+								description: 'De-registers or registers instances from EC2 ELBs',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_elb_lb',
+								description: 'Creates or destroys Amazon ELB',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_facts',
+								description: 'Gathers facts about remote hosts within ec2 (aws)',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_group',
+								description: 'Maintain an ec2 VPC security group',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_key',
+								description: 'Maintain an ec2 key pair',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_lc',
+								description: 'Create or delete AWS Autoscaling Launch Configurations',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_metric_alarm',
+								description: 'Create/update or delete AWS Cloudwatch ‘metric alarms’',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_scaling_policy',
+								description: 'Create or delete AWS scaling policies for Autoscaling groups',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_snapshot',
+								description: 'Creates a snapshot from an existing volume',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_tag',
+								description: 'Create and remove tag(s) to ec2 resources',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_vol',
+								description: 'Create and attach a volume, return volume id and device map',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ec2_vpc',
+								description: 'Configure AWS virtual private clouds',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'elasticache',
+								description: 'Manage cache clusters in Amazon Elasticache',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'gc_storage',
+								description: 'This module manages objects/buckets in Google Cloud Storage',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'gce',
+								description: 'Create or terminate GCE instances',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'gce_lb',
+								description: 'Create/destroy GCE load-balancer resources',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'gce_net',
+								description: 'Create/destroy GCE networks and firewall rules',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'gce_pd',
+								description: 'Utilize GCE persistent disk resources',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'glance_image',
+								description: 'Add/Delete images from glance',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'keystone_user',
+								description: 'Manage OpenStack Identity (keystone) users, tenants and roles',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'linode',
+								description: 'Create / delete / stop / restart an instance in Linode Public Cloud',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'nova_compute',
+								description: 'Create/Delete VMs from OpenStack',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'nova_keypair',
+								description: 'Add/Delete key pair from nova',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'ovirt',
+								description: 'OVirt/RHEV platform management',
+								type: 'extras',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_floating_ip',
+								description: 'Add/Remove floating IP from an instance',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_floating_ip_associate',
+								description: 'Associate or disassociate a particular floating IP with an instance',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_network',
+								description: 'Creates/Removes networks from OpenStack',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_router',
+								description: 'Create or Remove router from openstack',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_router_gateway',
+								description: 'Set/unset a gateway interface for the router with the specified external network',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_router_interface',
+								description: 'Attach/Dettach a subnet’s interface to a router',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'quantum_subnet',
+								description: 'Add/remove subnet from a network',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax',
+								description: 'Create / delete an instance in Rackspace Public Cloud',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_cbs',
+								description: 'Manipulate Rackspace Cloud Block Storage Volumes',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_cbs_attachments',
+								description: 'Manipulate Rackspace Cloud Block Storage Volume Attachments',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_cdb',
+								description: 'Create/delete or resize a Rackspace Cloud Databases instance',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_cdb_database',
+								description: 'Create / delete a database in the Cloud Databases',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_cdb_user',
+								description: 'Create / delete a Rackspace Cloud Database',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_clb',
+								description: 'Create / delete a load balancer in Rackspace Public Cloud',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_clb_nodes',
+								description: 'Add, modify and remove nodes from a Rackspace Cloud Load Balancer',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_dns',
+								description: 'Manage domains on Rackspace Cloud DNS',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_dns_record',
+								description: 'Manage DNS records on Rackspace Cloud DNS',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_facts',
+								description: 'Gather facts for Rackspace Cloud Servers',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_files',
+								description: 'Manipulate Rackspace Cloud Files Containers',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_files_objects',
+								description: 'Upload, download, and delete objects in Rackspace Cloud Files',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_identity',
+								description: 'Load Rackspace Cloud Identity',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_keypair',
+								description: 'Create a keypair for use with Rackspace Cloud Servers',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_meta',
+								description: 'Manipulate metadata for Rackspace Cloud Servers',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_network',
+								description: 'Create / delete an isolated network in Rackspace Public Cloud',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_queue',
+								description: 'Create / delete a queue in Rackspace Public Cloud',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_scaling_group',
+								description: 'Manipulate Rackspace Cloud Autoscale Groups',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rax_scaling_policy',
+								description: 'Manipulate Rackspace Cloud Autoscale Scaling Policy',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rds',
+								description: 'Create, delete, or modify an Amazon rds instance',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rds_param_group',
+								description: 'Manage RDS parameter groups',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'rds_subnet_group',
+								description: 'Manage RDS database subnet groups',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'route53',
+								description: 'Add or delete entries in Amazons Route53 DNS service',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 's3',
+								description: 'S3 module putting a file into S3',
+								type: 'core',
+								options: {
+								}
+							},
+							{
+								name: 'virt',
+								description: 'Manages virtual machines supported by libvirt',
+								type: 'extras',
+								options: {
+								}
+							},
+							{
+								name: 'vsphere_guest',
+								description: 'Create/delete/manage a guest VM through VMware vSphere',
+								type: 'core',
+								options: {
+								}
+							}
 						]
 					},
 					{
