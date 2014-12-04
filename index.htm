@@ -2315,6 +2315,12 @@
 									}
 								});
 								result += '</select>';
+							} else if (value.type === 'integer' || value.type === 'range') {
+								var defaultValue = value.default_value ? ' value="' + value.default_value + '"' : '';
+								var minValue = value.min_value ? ' min="' + value.min_value + '"' : '';
+								var maxValue = value.max_value ? ' max="' + value.max_value + '"' : '';
+								result += '<input type="number" class="js-module-option-value js-module-option-text-value" autocomplete="off"' + minValue + maxValue + defaultValue + ' />';
+
 							} else {
 								if (value.default_value) {
 									result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" value="' + value.default_value + '" />';
