@@ -1977,9 +1977,25 @@
 							},
 							{
 								name: 'fireball',
-								description: 'Enable fireball mode on remote node',
+								title: 'Enable fireball mode on remote node',
+								description: 'This modules launches an ephemeral fireball ZeroMQ message bus daemon on the remote node which Ansible can use to communicate with nodes at high speed. The daemon listens on a configurable port for a configurable amount of time. Starting a new fireball as a given user terminates any existing user fireballs. Fireball mode is AES encrypted',
 								type: 'core',
 								options: {
+									minutes: {
+										type: 'integer',
+										required: false,
+										default_value: '30',
+										min_value: 1,
+										description: 'The fireball listener daemon is started on nodes and will stay around for this number of minutes before turning itself off'
+									},
+									port: {
+										type: 'range',
+										required: false,
+										default_value: '5099',
+										min_value: 1,
+										max_value: 65535,
+										description: 'TCP port for ZeroMQ'
+									}
 								}
 							},
 							{
