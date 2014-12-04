@@ -2005,9 +2005,21 @@
 							},
 							{
 								name: 'debug',
-								description: 'Print statements during execution',
+								title: 'Print statements during execution',
+								description: 'This module prints statements during execution and can be useful for debugging variables or expressions without necessarily halting the playbook. Useful for debugging together with the ‘when:’ directive',
 								type: 'core',
 								options: {
+									msg: {
+										type: 'string',
+										required: false,
+										default_value: 'Hello world!',
+										description: 'The customized message that is printed. If omitted, prints a generic message'
+									},
+									var: {
+										type: 'string',
+										required: false,
+										description: "A variable name to debug. Mutually exclusive with the 'msg' option"
+									}
 								}
 							},
 							{
