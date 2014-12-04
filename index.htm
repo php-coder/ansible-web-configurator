@@ -1748,9 +1748,37 @@
 							},
 							{
 								name: 'debconf',
-								description: 'Configure a .deb package',
+								title: 'Configure a .deb package',
+								description: 'Configure a .deb package using debconf-set-selections. Or just query existing selections',
+								since_version: '1.6',
 								type: 'extras',
 								options: {
+									name: {
+										type: 'string',
+										required: true,
+										description: 'Name of package to configure'
+									},
+									question: {
+										type: 'string',
+										required: false,
+										description: 'A debconf configuration setting'
+									},
+									unseen: {
+										type: 'string',
+										required: false,
+										description: "Do not set 'seen' flag when pre-seeding"
+									},
+									value: {
+										type: 'string',
+										required: false,
+										description: 'Value to set the configuration to'
+									},
+									vtype: {
+										type: 'choice',
+										choices: ['string', 'password', 'boolean', 'select', 'multiselect', 'note', 'error', 'title', 'text'],
+										required: false,
+										description: 'The type of the value supplied'
+									}
 								}
 							},
 							{
