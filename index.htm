@@ -544,7 +544,8 @@
 						modules: [
 							{
 								name: 'command',
-								description: 'Executes a command on a remote node',
+								title: 'Executes a command on a remote node',
+								description: 'The command module takes the command name followed by a list of space-delimited arguments. The given command will be executed on all selected nodes. It will not be processed through the shell, so variables like $HOME and operations like "<", ">", "|", and "&" will not work (use the shell module if you need these features)',
 								type: 'core',
 								options: {
 									chdir: {
@@ -586,7 +587,8 @@
 							},
 							{
 								name: 'raw',
-								description: 'Executes a low-down and dirty SSH command',
+								title: 'Executes a low-down and dirty SSH command',
+								description: 'Executes a low-down and dirty SSH command, not going through the module subsystem. This is useful and should only be done in two cases. The first case is installing python-simplejson on older (Python 2.4 and before) hosts that need it as a dependency to run modules, since nearly all core modules require it. Another is speaking to any devices such as routers that do not have any Python installed. In any other case, using the shell or command module is much more appropriate. Arguments given to raw are run directly through the configured remote shell. Standard output, error output and return code are returned when available. There is no change handler support for this module. This module does not require python on the remote system, much like the script module',
 								type: 'core',
 								options: {
 									executable: {
@@ -604,7 +606,8 @@
 							},
 							{
 								name: 'script',
-								description: 'Runs a local script on a remote node after transferring it',
+								title: 'Runs a local script on a remote node after transferring it',
+								description: 'The script module takes the script name followed by a list of space-delimited arguments. The local script at path will be transferred to the remote node and then executed. The given script will be processed through the shell environment on the remote node. This module does not require python on the remote system, much like the raw module',
 								type: 'core',
 								options: {
 									creates: {
@@ -628,7 +631,8 @@
 							},
 							{
 								name: 'shell',
-								description: 'Execute commands in nodes',
+								title: 'Execute commands in nodes',
+								description: 'The shell module takes the command name followed by a list of space-delimited arguments. It is almost exactly like the command module but runs the command through a shell (/bin/sh) on the remote node',
 								type: 'core',
 								options: {
 									chdir: {
@@ -846,7 +850,8 @@
 						modules: [
 							{
 								name: 'add_host',
-								description: 'Add a host (and alternatively a group) to the ansible-playbook in-memory inventory',
+								title: 'Add a host (and alternatively a group) to the ansible-playbook in-memory inventory',
+								description: 'Use variables to create new hosts and groups in inventory for use in later plays of the same playbook. Takes variables so you can define the new hosts more fully',
 								type: 'core',
 								options: {
 									groups: {
@@ -863,7 +868,8 @@
 							},
 							{
 								name: 'group_by',
-								description: 'Create Ansible groups based on facts',
+								title: 'Create Ansible groups based on facts',
+								description: 'Use facts to create ad-hoc groups that can be used later in a playbook',
 								type: 'core',
 								options: {
 									key: {
@@ -1252,7 +1258,8 @@
 						modules: [
 							{
 								name: 'apt',
-								description: 'Manages apt-packages',
+								title: 'Manages apt-packages',
+								description: 'Manages apt packages (such as for Debian/Ubuntu)',
 								type: 'core',
 								options: {
 									cache_valid_time: {
@@ -1327,7 +1334,8 @@
 							},
 							{
 								name: 'apt_key',
-								description: 'Add or remove an apt key',
+								title: 'Add or remove an apt key',
+								description: 'Add or remove an apt key, optionally downloading it',
 								type: 'core',
 								since_version: '1.0',
 								options: {
@@ -1381,7 +1389,8 @@
 							},
 							{
 								name: 'apt_repository',
-								description: 'Add and remove APT repositories',
+								title: 'Add and remove APT repositories',
+								description: 'Add or remove an APT repositories in Ubuntu and Debian',
 								type: 'core',
 								options: {
 									mode: {
@@ -1584,7 +1593,8 @@
 							},
 							{
 								name: 'yum',
-								description: 'Manages packages with the yum package manager',
+								title: 'Manages packages with the yum package manager',
+								description: 'Installs, upgrade, removes, and lists packages and groups with the yum package manager',
 								type: 'core',
 								options: {
 									conf_file: {
@@ -1847,7 +1857,8 @@
 							},
 							{
 								name: 'service',
-								description: 'Manage services',
+								title: 'Manage services',
+								description: 'Controls services on remote hosts',
 								type: 'core',
 								options: {
 									arguments: {
@@ -2236,7 +2247,7 @@
 								+ '<span class="' + elemClassName + '">' + elem.name + '</span>'
 								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
 								+ (elem.since_version ? '<span class="label label-warning pull-right">' + elem.since_version + '</span>' : '')
-								+ (elem.description ? '<br /><small>' + elem.description + '</small>' : '')
+								+ '<br /><small>' + (elem.title || elem.description) + '</small>'
 							+ '</li>';
 					});
 				};
