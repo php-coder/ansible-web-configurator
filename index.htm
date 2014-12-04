@@ -1804,9 +1804,23 @@
 							},
 							{
 								name: 'locale_gen',
-								description: 'Creates or removes locales',
+								title: 'Creates or removes locales',
+								description: 'Manages locales by editing /etc/locale.gen and invoking locale-gen',
 								type: 'extras',
+								since_version: '1.6',
 								options: {
+									name: {
+										type: 'string',
+										required: true,
+										description: 'Name and encoding of the locale, such as "en_GB.UTF-8"',
+									},
+									state: {
+										type: 'choice',
+										choices: ['present', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'Whether the locale shall be present'
+									}
 								}
 							},
 							{
