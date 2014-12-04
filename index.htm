@@ -2338,11 +2338,8 @@
 								result += '<input type="number" class="js-module-option-value js-module-option-text-value" autocomplete="off"' + minValue + maxValue + defaultValue + ' />';
 
 							} else {
-								if (value.default_value) {
-									result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" value="' + value.default_value + '" />';
-								} else {
-									result +='<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off" />';
-								}
+								var defaultValue = value.default_value ? ' value="' + value.default_value + '"' : '';
+								result += '<input type="text" class="js-module-option-value js-module-option-text-value" autocomplete="off"'+ defaultValue + ' />';
 							}
 							if (value.since_version) {
 								result += '<span class="label label-warning pull-right">' + value.since_version + '</span>';
