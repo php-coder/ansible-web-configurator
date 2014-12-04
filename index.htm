@@ -35,6 +35,13 @@
 				</div>
 				<div class="col-md-3 hidden js-module-options-list">
 					<ul class="list-group list-unstyled">
+						<li class="list-group-item">
+							<input type="text" class="js-module-option-value js-module-common-option js-module-option-task-name" autocomplete="off" style="width: 100%;" />
+							<br />
+							<small>Task name</small>
+						</li>
+					</ul>
+					<ul class="list-group list-unstyled js-module-options-dynamic-list">
 						<!-- Populated from JavaScript -->
 					</ul>
 				</div>
@@ -2277,6 +2284,12 @@
 					$(elem).removeClass('list-group-item-info');
 				};
 
+				var clearCommonModuleOptions = function() {
+					var commonOptions = $('.js-module-common-option');
+					commonOptions.val('');
+					commonOptions.parent().removeClass('list-group-item-info');
+				};
+
 				var regenerateYamlDocument = function() {
 					$('.js-result-textarea').html(generateYamlCommand());
 				};
@@ -2319,7 +2332,7 @@
 				var showModuleOptionsList = function(elem) {
 					var modules = getOptionsListOfModule(getEntryName(elem));
 
-					$('.js-module-options-list ul').html(createEntriesForModuleOptions(modules, 'js-module-option-name'));
+					$('.js-module-options-list .js-module-options-dynamic-list').html(createEntriesForModuleOptions(modules, 'js-module-option-name'));
 					registerEventsForModuleOptionsList();
 
 					$('.js-module-options-list').removeClass('hidden');
@@ -2461,6 +2474,7 @@
 
 				var onModuleSelection = function(event) {
 					highlightMenuEntry(event.target, true);
+					clearCommonModuleOptions();
 					showModuleOptionsList(event.target);
 					showYamlDocument();
 				};
@@ -2494,7 +2508,7 @@
 
 				var getFormattedListModuleOptionsWithValues = function(separator) {
 					var moduleOptions = [];
-					$('.js-module-options-list .list-group-item-info').each(function(el) {
+					$('.js-module-options-dynamic-list .list-group-item-info').each(function(el) {
 						var option = $('.js-module-option-name', this).text();
 						var value = $('.js-module-option-value', this).val();
 						if (value.indexOf("{{") >= 0 && value.indexOf("}}") >= 0) {
@@ -2506,10 +2520,20 @@
 					return moduleOptions;
 				};
 
+				var getTaskName = function() {
+					return $('.js-module-option-task-name').first().val();
+				};
+
 				var generateYamlCommand = function() {
 					var moduleName = getNameOfActiveModule();
 					var moduleOptions = getFormattedListModuleOptionsWithValues(':'); // TODO: handle also key=value
-					return '- ' + moduleName + ":\n    " + moduleOptions.join("\n    ");
+					var taskName = getTaskName();
+					var result = '- ';
+					if (taskName !== '') {
+						result += 'name: ' + taskName + "\n  ";
+					}
+					result += moduleName + ":\n    " + moduleOptions.join("\n    ");
+					return result;
 				};
 
 				// start
