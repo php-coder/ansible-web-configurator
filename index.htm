@@ -1984,10 +1984,16 @@
 							},
 							{
 								name: 'assert',
-								description: 'Fail with custom message',
+								title: 'Fail with custom message',
+								description: 'This module asserts that a given expression is true and can be a simpler alternative to the ‘fail’ module in some cases',
 								since_version: '1.5',
 								type: 'core',
 								options: {
+									that: {
+										type: 'string',
+										required: true,
+										description: "A string expression of the same form that can be passed to the 'when' statement. Alternatively, a list of string expressions"
+									}
 								}
 							},
 							{
