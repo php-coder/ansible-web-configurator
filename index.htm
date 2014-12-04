@@ -1696,9 +1696,26 @@
 						modules: [
 							{
 								name: 'alternatives',
-								description: 'Manages alternative programs for common commands',
+								title: 'Manages alternative programs for common commands',
+								description: 'Manages symbolic links using the ‘update-alternatives’ tool provided on debian-like systems. Useful when multiple programs are installed but provide similar functionality (e.g. different editors)',
 								type: 'extras',
+								since_version: '1.6',
 								options: {
+									link: {
+										type: 'string',
+										required: false,
+										description: 'The path to the symbolic link that should point to the real executable'
+									},
+									name: {
+										type: 'string',
+										required: true,
+										description: 'The generic name of the link'
+									},
+									path: {
+										type: 'string',
+										required: true,
+										description: 'The path to the real executable that the link should point to'
+									}
 								}
 							},
 							{
