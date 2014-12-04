@@ -2406,7 +2406,7 @@
 				var generateYamlCommand = function() {
 					var moduleName = getNameOfActiveModule();
 					var moduleOptions = getFormattedListModuleOptionsWithValues(':'); // TODO: handle also key=value
-					return '- ' + moduleName + ":\n  " + moduleOptions.join("\n  ");
+					return '- ' + moduleName + ":\n    " + moduleOptions.join("\n    ");
 				};
 
 				// start
