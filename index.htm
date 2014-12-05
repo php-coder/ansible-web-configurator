@@ -837,9 +837,77 @@
 							},
 							{
 								name: 'template',
-								description: 'Templates a file out to a remote server',
+								title: 'Templates a file out to a remote server',
+								description: "Templates are processed by the Jinja2 templating language (http://jinja.pocoo.org/docs/) - documentation on the template formatting can be found in the Template Designer Documentation (http://jinja.pocoo.org/docs/templates/). Six additional variables can be used in templates: ansible_managed (configurable via the defaults section of ansible.cfg) contains a string which can be used to describe the template name, host, modification time of the template file and the owner uid, template_host contains the node name of the template’s machine, template_uid the owner, template_path the absolute path of the template, template_fullpath is the absolute path of the template, and template_run_date is the date that the template was rendered. Note that including a string that uses a date in the template will result in the template being marked ‘changed’ each time",
 								type: 'core',
 								options: {
+									backup: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly'
+									},
+									dest: {
+										type: 'string',
+										required: true,
+										description: 'Location to render the template to on the remote machine'
+									},
+									follow: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										since_version: '1.8',
+										description: 'This flag indicates that filesystem links, if they exist, should be followed'
+									},
+									group: {
+										type: 'string',
+										required: false,
+										description: 'Name of the group that should own the file/directory, as would be fed to chown'
+									},
+									mode: {
+										type: 'string',
+										required: false,
+										description: 'Mode the file or directory should be, such as 0644 as would be fed to chmod. As of version 1.8, the mode may be specified as a symbolic mode (for example, u+rwx or u=rw,g=r,o=r)'
+									},
+									owner: {
+										type: 'string',
+										required: false,
+										description: 'Name of the user that should own the file/directory, as would be fed to chown'
+									},
+									selevel: {
+										type: 'string',
+										required: false,
+										default_value: 's0',
+										description: 'Level part of the SELinux file context. This is the MLS/MCS attribute, sometimes known as the range. _default feature works as for seuser'
+									},
+									serole: {
+										type: 'string',
+										required: false,
+										description: 'Role part of SELinux file context, _default feature works as for seuser'
+									},
+									setype: {
+										type: 'string',
+										required: false,
+										description: 'Type part of SELinux file context, _default feature works as for seuser'
+									},
+									seuser: {
+										type: 'string',
+										required: false,
+										description: 'User part of SELinux file context. Will default to system policy, if applicable. If set to _default, it will use the user portion of the policy if available'
+									},
+									src: {
+										type: 'string',
+										required: true,
+										description: 'Path of a Jinja2 formatted template on the local server. This can be a relative or absolute path'
+									},
+									validate: {
+										type: 'string',
+										required: false,
+										since_version: '1,2',
+										description: "The validation command to run before copying into place.The path to the file to validate is passed in via '%s' which must be present as in the visudo example below.validation to run before copying into place. The command is passed securely so shell features like expansion and pipes won't work"
+									}
 								}
 							},
 							{
