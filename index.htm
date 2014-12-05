@@ -795,9 +795,86 @@
 							},
 							{
 								name: 'file',
-								description: 'Sets attributes of files',
+								title: 'Sets attributes of files',
+								description: 'Sets attributes of files, symlinks, and directories, or removes files/symlinks/directories. Many other modules support the same options as the file module - including copy, template, and assemble',
 								type: 'core',
 								options: {
+									follow: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										since_version: '1.8',
+										default_value: 'no',
+										description: 'This flag indicates that filesystem links, if they exist, should be followed'
+									},
+									force: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'Force the creation of the symlinks in two cases: the source file does not exist (but will appear later); the destination exists and is a file (so, we need to unlink the "path" file and create symlink to the "src" file in place of it)'
+									},
+									group: {
+										type: 'string',
+										required: false,
+										description: 'Name of the group that should own the file/directory, as would be fed to chown'
+									},
+									mode: {
+										type: 'string',
+										required: false,
+										description: 'Mode the file or directory should be, such as 0644 as would be fed to chmod. As of version 1.8, the mode may be specified as a symbolic mode (for example, u+rwx or u=rw,g=r,o=r)'
+									},
+									owner: {
+										type: 'string',
+										required: false,
+										description: 'Name of the user that should own the file/directory, as would be fed to chown'
+									},
+									path: {
+										type: 'string',
+										required: true,
+										description: 'Path to the file being managed. Aliases: dest, name'
+									},
+									recurse: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										since_version: '1.1',
+										default_value: 'no',
+										description: 'Recursively set the specified file attributes (applies only to state=directory)'
+									},
+									selevel: {
+										type: 'string',
+										required: false,
+										default_value: 's0',
+										description: 'Level part of the SELinux file context. This is the MLS/MCS attribute, sometimes known as the range. _default feature works as for seuser'
+									},
+									serole: {
+										type: 'string',
+										required: false,
+										description: 'Role part of SELinux file context, _default feature works as for seuser'
+									},
+									setype: {
+										type: 'string',
+										required: false,
+										description: 'Type part of SELinux file context, _default feature works as for seuser'
+									},
+									seuser: {
+										type: 'string',
+										required: false,
+										description: 'User part of SELinux file context. Will default to system policy, if applicable. If set to _default, it will use the user portion of the policy if available'
+									},
+									src: {
+										type: 'string',
+										required: false,
+										description: 'Path of the file to link to (applies only to state=link). Will accept absolute, relative and nonexisting paths. Relative paths are not expanded'
+									},
+									state: {
+										type: 'choice',
+										choices: ['file', 'link', 'directory', 'hard', 'touch', 'absent'],
+										required: false,
+										default_value: 'file',
+										description: 'If directory, all immediate subdirectories will be created if they do not exist, since 1.7 they will be created with the supplied permissions. If file, the file will NOT be created if it does not exist, see the copy or template module if you want that behavior. If link, the symbolic link will be created or changed. Use hard for hardlinks. If absent, directories will be recursively deleted, and files or symlinks will be unlinked. If touch (new in 1.4), an empty file will be created if the path does not exist, while an existing file or directory will receive updated file access and modification times (similar to the way `touch` works from the command line)'
+									}
 								}
 							},
 							{
