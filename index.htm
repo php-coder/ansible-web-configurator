@@ -18,6 +18,12 @@
 			.js-categories-list, .js-modules-list, .js-module-options-list, .js-result-command {
 				padding: 5px;
 			}
+			.active .glyphicon {
+				color: white;
+			}
+			.glyphicon.smaller {
+				font-size: 10px;
+			}
 		</style>
 	</head>
 	<body>
@@ -2375,6 +2381,7 @@
 						var disabledClass = isDisabled ? ' disabled' : '';
 						return '<li class="list-group-item' + disabledClass + '">'
 								+ '<span class="' + elemClassName + '">' + elem.name + '</span>'
+								+ '&nbsp;<a target="_blank" href="http://docs.ansible.com/' + elem.name + '_module.html"><span class="glyphicon glyphicon-new-window smaller"></span></a>'
 								+ (isDisabled ? '&nbsp;<span class="label label-default pull-right">TODO</span>' : '')
 								+ (elem.since_version ? '<span class="label label-warning pull-right">' + elem.since_version + '</span>' : '')
 								+ '<br /><small>' + (elem.title || elem.description) + '</small>'
