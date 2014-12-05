@@ -900,9 +900,34 @@
 							},
 							{
 								name: 'stat',
-								description: 'Retrieve file or file system status',
+								title: 'Retrieve file or file system status',
+								description: "Retrieves facts for a file similar to the linux/unix ‘stat’ command",
 								type: 'core',
+								since_version: '1.3',
 								options: {
+									follow: {
+										type: 'string',
+										required: false,
+										description: 'Whether to follow symlinks'
+									},
+									get_checksum: {
+										type: 'string',
+										required: false,
+										since_version: '1.8',
+										default_value: 'True',
+										description: 'Whether to return a checksum of the file (currently sha1)'
+									},
+									get_md5: {
+										type: 'string',
+										required: false,
+										default_value: 'True',
+										description: "Whether to return the md5 sum of the file. Will return None if we're unable to use md5 (Common for FIPS-140 compliant systems)"
+									},
+									path: {
+										type: 'string',
+										required: true,
+										description: 'The full path of the file/object to get the facts of'
+									}
 								}
 							},
 							{
