@@ -2254,6 +2254,160 @@
 								description: 'Manage user accounts',
 								type: 'core',
 								options: {
+									append: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'If yes, will only add groups, not set them to just the list in groups'
+									},
+									comment: {
+										type: 'string',
+										required: false,
+										description: 'Optionally sets the description (aka GECOS) of user account'
+									},
+									createhome: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'yes',
+										description: 'Unless set to no, a home directory will be made for the user when the account is created or if the home directory does not exist'
+									},
+									force: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'When used with state=absent, behavior is as with userdel --force'
+									},
+									generate_ssh_key: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										since_version: '0.9',
+										description: 'Whether to generate a SSH key for the user in question. This will not overwrite an existing SSH key'
+									},
+									group: {
+										type: 'string',
+										required: false,
+										description: "Optionally sets the user's primary group (takes a group name)"
+									},
+									groups: {
+										type: 'string',
+										required: false,
+										description: "Puts the user in this comma-delimited list of groups. When set to the empty string ('groups='), the user is removed from all groups except the primary group"
+									},
+									home: {
+										type: 'string',
+										required: false,
+										description: "Optionally set the user's home directory"
+									},
+									login_class: {
+										type: 'string',
+										required: false,
+										description: "Optionally sets the user's login class for FreeBSD, OpenBSD and NetBSD systems"
+									},
+									move_home: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: "If set to yes when used with home=, attempt to move the user's home directory to the specified directory if it isn't there already"
+									},
+									name: {
+										type: 'string',
+										required: true,
+										description: 'Name of the user to create, remove or modify'
+									},
+									non_unique: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										since_version: '1.1',
+										description: 'Optionally when used with the -u option, this option allows to change the user ID to a non-unique value'
+									},
+									password: {
+										type: 'string',
+										required: false,
+										description: "Optionally set the user's password to this crypted value. See the user example in the github examples directory for what this looks like in a playbook. The FAQ contains details on various ways to generate these password values"
+									},
+									remove: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'When used with state=absent, behavior is as with userdel --remove'
+									},
+									shell: {
+										type: 'string',
+										required: false,
+										description: "Optionally set the user's shell"
+									},
+									ssh_key_bits: {
+										type: 'integer',
+										required: false,
+										min_value: 1,
+										default_value: '2048',
+										since_version: '0.9',
+										description: 'Optionally specify number of bits in SSH key to create'
+									},
+									ssh_key_comment: {
+										type: 'string',
+										required: false,
+										default_value: 'ansible-generated',
+										since_version: '0.9',
+										description: 'Optionally define the comment for the SSH key'
+									},
+									ssh_key_file: {
+										type: 'string',
+										required: false,
+										default_value: '$HOME/.ssh/id_rsa',
+										since_version: '0.9',
+										description: 'Optionally specify the SSH key filename'
+									},
+									ssh_key_passphrase: {
+										type: 'string',
+										required: false,
+										since_version: '0.9',
+										description: 'Set a passphrase for the SSH key. If no passphrase is provided, the SSH key will default to having no passphrase'
+									},
+									ssh_key_type: {
+										type: 'string',
+										required: false,
+										default_value: 'rsa',
+										since_version: '0.9',
+										description: 'Optionally specify the type of SSH key to generate. Available SSH key types will depend on implementation present on target host'
+									},
+									state: {
+										type: 'choice',
+										choices: ['present', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'Whether the account should exist. When absent, removes the user account'
+									},
+									system: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'When creating an account, setting this to yes makes the user a system account. This setting cannot be changed on existing users'
+									},
+									uid: {
+										type: 'integer',
+										required: false,
+										min: 1,
+										description: 'Optionally sets the UID of the user'
+									},
+									update_password: {
+										type: 'choice',
+										choices: ['always', 'on_create'],
+										required: false,
+										default_value: 'always',
+										since_version: '1.3',
+										description: 'always will update passwords if they differ. on_create will only set the password for newly created users'
+									}
 								}
 							},
 							{
