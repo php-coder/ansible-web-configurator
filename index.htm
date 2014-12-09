@@ -2058,9 +2058,35 @@
 							},
 							{
 								name: 'group',
-								description: 'Add or remove groups',
+								title: 'Add or remove groups',
+								description: 'Manage presence of groups on a host',
 								type: 'core',
 								options: {
+									gid: {
+										type: 'integer',
+										min_value: 1,
+										required: false,
+										description: 'Optional GID to set for the group'
+									},
+									name: {
+										type: 'string',
+										required: true,
+										description: 'Name of the group to manage'
+									},
+									state: {
+										type: 'choice',
+										choices: ['present', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'Whether the group should be present or not on the remote host'
+									},
+									system: {
+										type: 'choice',
+										choices: ['yes', 'no'],
+										required: false,
+										default_value: 'no',
+										description: 'If yes, indicates that the group created is a system group'
+									}
 								}
 							},
 							{
