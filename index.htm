@@ -50,6 +50,63 @@
 					<ul class="list-group list-unstyled js-module-options-dynamic-list">
 						<!-- Populated from JavaScript -->
 					</ul>
+					<ul class="list-group list-unstyled js-module-options-generic-list">
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_conditionals.html#register-variables">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">register</span>
+							<input type="text" class="js-module-option-value js-module-common-option" autocomplete="off" />
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_conditionals.html#the-when-statement">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">when</span>
+							<input type="text" class="js-module-option-value js-module-common-option" autocomplete="off" />
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_tags.html">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">tags</span>
+							<input type="text" class="js-module-option-value js-module-option-list-value js-module-common-option" autocomplete="off" />
+							<br />
+							<small>Comma separated list of values</small>
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_error_handling.html#controlling-what-defines-failure">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">ignore_errors</span>
+							<input type="checkbox" class="js-module-option-value js-module-option-checkbox-value js-module-common-option" autocomplete="off" />
+							<span class="label label-warning pull-right">0.6</span>
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_checkmode.html#running-a-task-in-check-mode">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">always_run</span>
+							<input type="checkbox" class="js-module-option-value js-module-option-checkbox-value js-module-common-option" autocomplete="off" />
+							<span class="label label-warning pull-right">1.3</span>
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_error_handling.html#overriding-the-changed-result">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">changed_when</span>
+							<input type="text" class="js-module-option-value js-module-common-option" autocomplete="off" />
+							<span class="label label-warning pull-right">1.3</span>
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_error_handling.html#ignoring-failed-commands">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">failed_when</span>
+							<input type="text" class="js-module-option-value js-module-common-option" autocomplete="off" />
+							<span class="label label-warning pull-right">1.4</span>
+						</li>
+					</ul>
 				</div>
 				<div class="col-md-4 hidden js-result-command">
 					<textarea class="js-result-textarea" rows="25" autocomplete="off" readonly style="width: 100%;">
@@ -2674,9 +2731,13 @@
 				};
 
 				var clearCommonModuleOptions = function() {
-					var commonOptions = $('.js-module-common-option');
+					var commonOptions = $('.js-module-common-option:not(.js-module-option-checkbox-value)');
 					commonOptions.val('');
 					commonOptions.parent().removeClass('list-group-item-info');
+
+					var commonCheckboxOptions = $('.js-module-common-option.js-module-option-checkbox-value');
+					commonCheckboxOptions.prop('checked', false);
+					commonCheckboxOptions.parent().removeClass('list-group-item-info');
 				};
 
 				var regenerateYamlDocument = function() {
@@ -2844,12 +2905,20 @@
 				};
 
 				var registerEventsForModuleOptionsList = function() {
-					$('.js-module-options-list .js-module-option-value').change(function(event) {
-						if ($(event.target).val() === '') {
-							$(this).parent('.list-group-item').trigger('app:module-option-unselected');
-						} else {
-							$(this).parent('.list-group-item').trigger('app:module-option-selected');
-						}
+					$('.js-module-options-list .js-module-option-value:not(.js-module-option-checkbox-value)').change(function(event) {
+						$(this).parent('.list-group-item').trigger(
+							$(event.target).val() !== ''
+							? 'app:module-option-selected'
+							: 'app:module-option-unselected'
+						);
+					});
+
+					$('.js-module-options-list .js-module-option-checkbox-value').change(function(event) {
+						$(this).parent('.list-group-item').trigger(
+							$(event.target).is(':checked')
+							? 'app:module-option-selected'
+							: 'app:module-option-unselected'
+						);
 					});
 				};
 
@@ -2898,12 +2967,27 @@
 
 				var getFormattedListModuleOptionsWithValues = function(separator) {
 					var moduleOptions = [];
-					$('.js-module-options-dynamic-list .list-group-item-info').each(function(el) {
+					$('.js-module-options-dynamic-list .list-group-item-info, .js-module-options-generic-list .list-group-item-info').each(function(el) {
 						var option = $('.js-module-option-name', this).text();
-						var value = $('.js-module-option-value', this).val();
-						if (value.indexOf("{{") >= 0 && value.indexOf("}}") >= 0) {
-							value = '"' + value + '"';
+						var input = $('.js-module-option-value', this);
+						var value = '';
+						if (input.is(':checkbox')) {
+							value = input.is(':checked') ? 'yes' : 'no';
+						} else {
+							value = input.val();
+							if (value.indexOf("{{") >= 0 && value.indexOf("}}") >= 0) {
+								value = '"' + value + '"';
+							} else if (input.hasClass('js-module-option-list-value')) {
+								var options = _.chain(value.split(/\s*,\s*/)).compact().uniq().value();
+								if (options.length === 1) {
+									value = options[0];
+								} else {
+									options.unshift(''); // for indentation of 1st element
+									value = options.join("\n      - ");
+								}
+							}
 						}
+
 						var text = option + separator + ' ' + value;
 						moduleOptions.push(text);
 					});
