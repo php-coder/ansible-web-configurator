@@ -123,6 +123,24 @@
 							<input type="text" class="js-module-option-value js-module-common-option" autocomplete="off" />
 							<span class="label label-warning pull-right">0.7</span>
 						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_async.html">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">async</span>
+							<input type="number" min="1" class="js-module-option-value js-module-common-option" autocomplete="off" />
+							<br />
+							<small>Launch task asynchronously with its maximum runtime (in seconds)</small>
+						</li>
+						<li class="list-group-item">
+							<a target="_blank" href="http://docs.ansible.com/playbooks_async.html">
+								<span class="glyphicon glyphicon-new-window smaller"></span>
+							</a>
+							<span class="js-module-option-name">poll</span>
+							<input type="number" value="10" min="0" class="js-module-option-value js-module-common-option" autocomplete="off" />
+							<br />
+							<small>How frequently poll for status (in seconds)</small>
+						</li>
 					</ul>
 				</div>
 				<div class="col-md-4 hidden js-result-command">
