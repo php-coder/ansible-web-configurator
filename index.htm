@@ -25,6 +25,9 @@
 			.glyphicon.smaller {
 				font-size: 10px;
 			}
+			.js-yaml-style label {
+				font-weight: normal;
+			}
 		</style>
 	</head>
 	<body>
@@ -144,8 +147,25 @@
 					</ul>
 				</div>
 				<div class="col-md-4 hidden js-result-command">
-					<textarea class="js-result-textarea" rows="25" autocomplete="off" readonly style="width: 100%;">
-					</textarea>
+					<div class="row">
+						<div class="col-md-12">
+							<textarea class="js-result-textarea" rows="25" autocomplete="off" readonly style="width: 100%;">
+							</textarea>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 js-yaml-style" style="padding-top: 10px; margin-left: 10px;">
+							YAML style:<br />
+							<input type="radio" name="yaml-style" id="colon" value="colon" checked />
+							<label for="colon">key: value</label>
+							<br />
+							<input type="radio" name="yaml-style" id="equal-one-line" value="equal-one-line" />
+							<label for="equal-one-line">key=value (single line)</label>
+							<br />
+							<input type="radio" name="yaml-style" id="equal-multi-line" value="equal-multi-line" />
+							<label for="equal-multi-line">key=value (multi line)</label>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -2957,6 +2977,12 @@
 					});
 				};
 
+				var registerEventsForYamlStyleOptions = function() {
+					$('.js-yaml-style input[name=yaml-style]').change(function(event) {
+						$(this).trigger('app:yaml-style-changed');
+					});
+				};
+
 				// define callbacks
 
 				var onCategorySelection = function(event) {
@@ -2987,12 +3013,17 @@
 					regenerateYamlDocument();
 				};
 
+				var onYamlStyleChanging = function() {
+					regenerateYamlDocument();
+				}
+
 				// bind callbacks
 
 				$(document).bind('app:category-selected', onCategorySelection);
 				$(document).bind('app:module-selected', onModuleSelection);
 				$(document).bind('app:module-option-selected', onModuleOptionSelection);
 				$(document).bind('app:module-option-unselected', onModuleOptionUnselection);
+				$(document).bind('app:yaml-style-changed', onYamlStyleChanging);
 
 				// other
 
@@ -3023,7 +3054,7 @@
 							}
 						}
 
-						var text = option + separator + ' ' + value;
+						var text = option + separator + value;
 						moduleOptions.push(text);
 					});
 					return moduleOptions;
@@ -3034,20 +3065,25 @@
 				};
 
 				var generateYamlCommand = function() {
+					var yamlStyle = $('.js-yaml-style input[name=yaml-style]:checked').val();
+					var keyValueSeparator = yamlStyle === 'colon' ? ': ' : '=';
+					var optionsSeparator = yamlStyle === 'equal-one-line' ? ' ' : "\n    ";
+
 					var moduleName = getNameOfActiveModule();
-					var moduleOptions = getFormattedListModuleOptionsWithValues(':'); // TODO: handle also key=value
+					var moduleOptions = getFormattedListModuleOptionsWithValues(keyValueSeparator);
 					var taskName = getTaskName();
 					var result = '- ';
 					if (taskName !== '') {
 						result += 'name: ' + taskName + "\n  ";
 					}
-					result += moduleName + ":\n    " + moduleOptions.join("\n    ");
+					result += moduleName + ":\n    " + moduleOptions.join(optionsSeparator);
 					return result;
 				};
 
 				// start
 
 				showCategoriesList();
+				registerEventsForYamlStyleOptions();
 			});
 		</script>
 	</body>
