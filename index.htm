@@ -3076,7 +3076,7 @@
 					if (taskName !== '') {
 						result += 'name: ' + taskName + "\n  ";
 					}
-					result += moduleName + ":\n    " + moduleOptions.join(optionsSeparator);
+					result += moduleName + ':' + optionsSeparator + moduleOptions.join(optionsSeparator);
 					return result;
 				};
 
