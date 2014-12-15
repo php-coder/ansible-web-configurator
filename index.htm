@@ -54,7 +54,8 @@
 					<ul class="list-group list-unstyled js-module-options-dynamic-list">
 						<!-- Populated from JavaScript -->
 					</ul>
-					<ul class="list-group list-unstyled js-module-options-generic-list">
+					<a class="list-group-item text-center js-toggle-generic-options" href="javascript:void(0)"><span>Show</span> additional options</a>
+					<ul class="list-group list-unstyled hidden js-module-options-generic-list">
 						<li class="list-group-item">
 							<a target="_blank" href="http://docs.ansible.com/playbooks_conditionals.html#register-variables">
 								<span class="glyphicon glyphicon-new-window smaller"></span>
@@ -2955,6 +2956,8 @@
 					$('.js-module-options-list .js-module-options-dynamic-list').html(createEntriesForModuleOptions(modules, 'js-module-option-name'));
 					registerEventsForModuleOptionsList();
 
+					registerEventsForShowHideGenericOptionsLink();
+
 					$('.js-module-options-list').removeClass('hidden');
 				};
 
@@ -3089,6 +3092,19 @@
 							? 'app:module-option-selected'
 							: 'app:module-option-unselected'
 						);
+					});
+				};
+
+				var registerEventsForShowHideGenericOptionsLink = function() {
+					$('.js-toggle-generic-options').on('click', function() {
+						var optionsList = $('.js-module-options-generic-list');
+						if (optionsList.hasClass('hidden')) {
+							$(this).find('span').text('Hide');
+							optionsList.removeClass('hidden');
+						} else {
+							optionsList.addClass('hidden');
+							$(this).find('span').text('Show');
+						}
 					});
 				};
 
