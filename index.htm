@@ -2203,9 +2203,16 @@
 							},
 							{
 								name: 'hostname',
-								description: 'Manage hostname',
+								title: 'Manage hostname',
+								description: 'Set system’s hostname. Currently implemented on Debian, Ubuntu, Fedora, RedHat, openSUSE, Linaro, ScientificLinux, Arch, CentOS, AMI',
 								type: 'core',
+								since_version: '1.4',
 								options: {
+									name: {
+										type: 'string',
+										required: true,
+										description: 'Name of the host'
+									}
 								}
 							},
 							{
