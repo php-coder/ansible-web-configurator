@@ -2259,9 +2259,29 @@
 							},
 							{
 								name: 'modprobe',
+								title: 'Add or remove kernel modules',
 								description: 'Add or remove kernel modules',
 								type: 'extras',
+								since_version: '1.4',
 								options: {
+									name: {
+										type: 'string',
+										required: true,
+										description: 'Name of kernel module to manage'
+									},
+									params: {
+										type: 'string',
+										required: false,
+										since_version: '1.6',
+										description: 'Modules parameters'
+									},
+									state: {
+										type: 'choice',
+										choices: ['present', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'Whether the module should be present or absent'
+									}
 								}
 							},
 							{
