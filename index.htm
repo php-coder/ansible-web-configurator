@@ -2715,9 +2715,34 @@
 							},
 							{
 								name: 'jboss',
-								description: 'Deploys applications to JBoss',
+								title: 'Deploys applications to JBoss',
+								description: 'Deploy applications to JBoss standalone using the filesystem',
+								type: 'extras',
 								since_version: '1.4',
 								options: {
+									deploy_path: {
+										type: 'string',
+										required: false,
+										default_value: '/var/lib/jbossas/standalone/deployments',
+										description: 'The location in the filesystem where the deployment scanner listens'
+									},
+									deployment: {
+										type: 'string',
+										required: true,
+										description: 'The name of the deployment'
+									},
+									src: {
+										type: 'string',
+										required: false,
+										description: 'The remote path of the application ear or war to deploy'
+									},
+									state: {
+										type: 'choice',
+										choices: ['present', 'absent'],
+										required: false,
+										default_value: 'present',
+										description: 'Whether the application should be deployed or undeployed'
+									}
 								}
 							},
 							{
