@@ -3106,7 +3106,6 @@
 						}
 					});
 				};
-				registerEventsForShowHideGenericOptionsLink();
 
 				var registerEventsForYamlStyleOptions = function() {
 					$('.js-yaml-style input[name=yaml-style]').change(function(event) {
@@ -3212,7 +3211,7 @@
 				};
 
 				// start
-
+				registerEventsForShowHideGenericOptionsLink();
 				showCategoriesList();
 				registerEventsForYamlStyleOptions();
 			});
