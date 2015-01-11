@@ -2956,7 +2956,6 @@
 					$('.js-module-options-list .js-module-options-dynamic-list').html(createEntriesForModuleOptions(modules, 'js-module-option-name'));
 					registerEventsForModuleOptionsList();
 
-					registerEventsForShowHideGenericOptionsLink();
 
 					$('.js-module-options-list').removeClass('hidden');
 				};
@@ -3212,7 +3211,7 @@
 				};
 
 				// start
-
+				registerEventsForShowHideGenericOptionsLink();
 				showCategoriesList();
 				registerEventsForYamlStyleOptions();
 			});
